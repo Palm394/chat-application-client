@@ -12,6 +12,7 @@ const theme = createTheme({
       default: "#E9E9EB",
     },
   },
+  spacing: 5,
   shadows: Array(25).fill("none") as Shadows,
 });
 
