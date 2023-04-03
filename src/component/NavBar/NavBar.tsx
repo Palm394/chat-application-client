@@ -1,14 +1,13 @@
-import { AppBar, Avatar, Toolbar, Typography } from "@mui/material"
+import { IconButton } from "@mui/material"
 import EditIcon from '@mui/icons-material/Edit';
+import NavBarLayout from "./NavBarLayout";
 
 export default function NavBar() {
     return (
-        <AppBar position="static">
-            <Toolbar>
-                <Avatar />
-                <Typography>nickname</Typography>
+        <NavBarLayout avatar="n" text={"nickname"}>
+            <IconButton>
                 <EditIcon />
-            </Toolbar>
-        </AppBar>
+            </IconButton>
+        </NavBarLayout>
     )
 }

@@ -1,13 +1,13 @@
-import { AppBar, Toolbar, Typography } from "@mui/material"
+import { IconButton } from "@mui/material"
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import NavBarLayout from "./NavBarLayout";
 
 export default function NavBarGroup() {
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Typography>nickname</Typography>
+    <NavBarLayout text={"client1"}>
+      <IconButton>
         <MoreVertIcon />
-      </Toolbar>
-    </AppBar>
+      </IconButton>
+    </NavBarLayout>
   )
 }

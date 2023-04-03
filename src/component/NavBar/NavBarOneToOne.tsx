@@ -1,16 +1,13 @@
-import { AppBar, Avatar, Toolbar, Typography } from "@mui/material";
+import { IconButton } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import NavBarLayout from "./NavBarLayout";
 
 export default function NavBarOneToOne() {
   return (
-    <>
-      <AppBar position="static">
-        <Toolbar>
-          <Avatar />
-          <Typography>nickname</Typography>
-          <MoreVertIcon />
-        </Toolbar>
-      </AppBar>
-    </>
+    <NavBarLayout avatar="c" text={"client1"}>
+      <IconButton>
+        <MoreVertIcon />
+      </IconButton>
+    </NavBarLayout>
   )
 }
