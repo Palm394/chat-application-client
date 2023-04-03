@@ -3,7 +3,7 @@ import { Box, IconButton, TextField as MuiTextField, styled } from "@mui/materia
 import SendIcon from '@mui/icons-material/Send';
 
 const TextField = styled(MuiTextField)({
-  '& .MuiOutlinedInput-root': {
+  '.MuiOutlinedInput-root': {
     '&': {
       borderColor: 'none',
       backgroundColor: theme.palette.background.default,
