@@ -2,6 +2,7 @@ import CenterLayout from "@/component/MainContent/Layout";
 import SingleChatList from "@/component/MainContent/SingleChatList";
 import NavBar from "@/component/NavBar/NavBar";
 import List from "@/component/common/List";
+import CreateGroup from "@/component/footer/CreateGroup";
 
 export default function Home() {
   return (
@@ -21,9 +22,15 @@ export default function Home() {
           <SingleChatList href="/group_chat/1" label="client1" type="Group" />
           <SingleChatList href="/group_chat/1" label="client1" type="Group" />
           <SingleChatList href="/group_chat/1" label="client1" type="Group" />
+          <SingleChatList href="/group_chat/1" label="client1" type="Group" />
+          <SingleChatList href="/group_chat/1" label="client1" type="Group" />
+          <SingleChatList href="/group_chat/1" label="client1" type="Group" />
+          <SingleChatList href="/group_chat/1" label="client1" type="Group" />
+          <SingleChatList href="/group_chat/1" label="client1" type="Group" />
+          <SingleChatList href="/group_chat/1" label="client1" type="Group" />
         </List>
       </CenterLayout>
-
+      <CreateGroup />
     </>
   )
 }

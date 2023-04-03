@@ -1,6 +1,7 @@
 import theme from "@/config/theme";
-import { Box, IconButton, TextField as MuiTextField, styled } from "@mui/material";
+import { IconButton, TextField as MuiTextField, styled } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
+import FooterLayout from "./Layout";
 
 const TextField = styled(MuiTextField)({
   '.MuiOutlinedInput-root': {
@@ -17,13 +18,7 @@ const TextField = styled(MuiTextField)({
 
 export default function ChatBox() {
   return (
-    <Box
-      sx={{
-        height: "100px",
-        backgroundColor: theme.palette.primary.main,
-        padding: theme.spacing(5)
-      }}
-    >
+    <FooterLayout>
       <TextField
         placeholder="Enter message here!"
         fullWidth
@@ -36,7 +31,7 @@ export default function ChatBox() {
           )
         }}
       />
-    </Box>
+    </FooterLayout>
   )
 }
 

@@ -8,7 +8,7 @@ type props = {
 
 export default function ProfileLayout({ ...props }: props) {
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Toolbar>
         {props.avatar &&
           <Avatar sx={{ marginRight: "3vw" }}>{props.avatar}</Avatar>
