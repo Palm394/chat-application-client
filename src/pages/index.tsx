@@ -1,4 +1,4 @@
-import NavBar from "@/component/NavBar";
+import NavBar from "@/component/NavBar/NavBar";
 
 export default function Home() {
   return (
@@ -6,6 +6,5 @@ export default function Home() {
       <NavBar />
       <h1>Hello Socket programming</h1>
     </>
-
   )
 }
