@@ -1,6 +1,6 @@
 import { AppBar, Toolbar } from "@mui/material"
 
-export default function NavBar(){
+export default function NavBar() {
     return (
         <AppBar position="static">
             <Toolbar>
