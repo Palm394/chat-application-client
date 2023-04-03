@@ -1,7 +1,7 @@
 import { List as MuiList } from "@mui/material";
 
 type props = {
-  children: JSX.Element[]
+  children: JSX.Element | JSX.Element[]
 }
 
 export default function List({ ...props }: props) {
