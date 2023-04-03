@@ -1,7 +1,7 @@
-import NavBarGroup from "@/component/NavBar/NavBarGroup";
+import NavBar from "@/component/NavBar/NavBarGroup";
 
 export default function GroupChat() {
   return (
-    <NavBarGroup />
+    <NavBar />
   )
 }
