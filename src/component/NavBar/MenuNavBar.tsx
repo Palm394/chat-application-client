@@ -34,6 +34,7 @@ export default function Menu({ ...props }: props) {
         <Dialog
           open={modal.open}
           onClose={modal.onClose}
+          header={"choose background image"}
           content={
             <>input image</>
           }

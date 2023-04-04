@@ -32,7 +32,12 @@ export default function Message({ ...props }: props) {
           <Dialog
             open={modal.open}
             onClose={modal.onClose}
-            content={<Typography>some profile</Typography>}
+            content={
+              <>
+                <Avatar sx={{ margin: "auto" }} />
+                <Typography>some profile</Typography>
+              </>
+            }
             iconAction={[<MessageIcon />]}
           />
         </>
