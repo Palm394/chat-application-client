@@ -12,7 +12,7 @@ export default function Dialog({ ...props }: props) {
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <MuiDialog open={props.open} onClose={props.onClose}>
-        <DialogTitle>{props.header}</DialogTitle>
+        <DialogTitle sx={{ margin: "auto" }}>{props.header}</DialogTitle>
         <DialogContent>{props.content}</DialogContent>
         <DialogActions sx={{ justifyContent: "center" }}>
           {props.iconAction.map((icon) => {
