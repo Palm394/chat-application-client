@@ -10,11 +10,11 @@ export default function Home() {
       <NavBar />
       <CenterLayout>
         <List>
-          <SingleChatList href="/chat/1" label="client1" type="Client" />
-          <SingleChatList href="/chat/1" label="client1" type="Client" />
-          <SingleChatList href="/chat/1" label="client1" type="Client" />
-          <SingleChatList href="/chat/1" label="client1" type="Client" />
-          <SingleChatList href="/chat/1" label="client1" type="Client" />
+          <SingleChatList href="/chat/1" label="client1" type="1-1" />
+          <SingleChatList href="/chat/1" label="client1" type="1-1" />
+          <SingleChatList href="/chat/1" label="client1" type="1-1" />
+          <SingleChatList href="/chat/1" label="client1" type="1-1" />
+          <SingleChatList href="/chat/1" label="client1" type="1-1" />
         </List>
         <List>
           <SingleChatList href="/group_chat/1" label="client1" type="Group" />

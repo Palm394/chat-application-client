@@ -33,7 +33,10 @@ export default function CreateGroup() {
             />
           }
           iconAction={
-            [<CloseIcon />, <CheckIcon />]
+            [
+              [<CloseIcon />, modal.onClose],
+              [<CheckIcon />, () => { }]
+            ]
           }
         />
       </>

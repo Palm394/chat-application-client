@@ -2,9 +2,10 @@ import Dialog from "@/component/common/Dialog";
 import theme from "@/config/theme";
 import useModal from "@/hook/useModal";
 import { ChatType } from "@/type/Chat";
-import { Avatar, Box, Button, ListItem, Stack, Typography } from "@mui/material";
+import { Avatar, Button, ListItem, Stack, Typography } from "@mui/material";
 import MessageIcon from '@mui/icons-material/Message';
 import BubbleMessage from "./BubbleMessage";
+import { useRouter } from "next/router";
 
 type props = {
   isMine: boolean,
@@ -18,6 +19,7 @@ Message.defaultProps = {
 }
 
 export default function Message({ ...props }: props) {
+  const router = useRouter()
   const modal = useModal()
 
   return (
@@ -44,7 +46,7 @@ export default function Message({ ...props }: props) {
                 <Typography>some profile</Typography>
               </>
             }
-            iconAction={[[<MessageIcon />, () => { }]]}
+            iconAction={[[<MessageIcon />, () => { router.push("/chat/1") }]]}
           />
         </>
       }
