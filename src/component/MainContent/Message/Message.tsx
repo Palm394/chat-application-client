@@ -2,14 +2,19 @@ import Dialog from "@/component/common/Dialog";
 import theme from "@/config/theme";
 import useModal from "@/hook/useModal";
 import { ChatType } from "@/type/Chat";
-import { Avatar, Button, ListItem, Typography } from "@mui/material";
+import { Avatar, Box, Button, ListItem, Stack, Typography } from "@mui/material";
 import MessageIcon from '@mui/icons-material/Message';
 import BubbleMessage from "./BubbleMessage";
 
 type props = {
   isMine: boolean,
   avatar?: string,
-  type: ChatType
+  type: ChatType,
+  senderName?: string
+}
+
+Message.defaultProps = {
+  senderName: "Sender Name"
 }
 
 export default function Message({ ...props }: props) {
@@ -43,7 +48,12 @@ export default function Message({ ...props }: props) {
           />
         </>
       }
-      <BubbleMessage text={"test message"} isMine={props.isMine} />
+      <Stack>
+        {props.type === "Group" && !props.isMine &&
+          <Typography sx={{ paddingLeft: theme.spacing(2), paddingBottom: theme.spacing(1) }} variant="body2">{props.senderName}</Typography>
+        }
+        <BubbleMessage text={"test message"} isMine={props.isMine} />
+      </Stack>
     </ListItem>
   )
 }

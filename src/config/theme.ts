@@ -12,6 +12,12 @@ const theme = createTheme({
       default: "#E9E9EB",
     },
   },
+  typography: {
+    body2: {
+      fontWeight: "200",
+      fontSize: "0.6rem",
+    },
+  },
   spacing: 5,
   shadows: Array(25).fill("none") as Shadows,
 });
