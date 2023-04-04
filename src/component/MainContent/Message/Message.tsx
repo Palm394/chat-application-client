@@ -44,13 +44,13 @@ export default function Message({ ...props }: props) {
                 <Typography>some profile</Typography>
               </>
             }
-            iconAction={[<MessageIcon />]}
+            iconAction={[[<MessageIcon />, () => { }]]}
           />
         </>
       }
       <Stack>
         {props.type === "Group" && !props.isMine &&
-          <Typography sx={{ paddingLeft: theme.spacing(2), paddingBottom: theme.spacing(1) }} variant="body2">{props.senderName}</Typography>
+          <Typography sx={{ paddingLeft: theme.spacing(2), paddingBottom: 0 }} variant="body2">{props.senderName}</Typography>
         }
         <BubbleMessage text={"test message"} isMine={props.isMine} />
       </Stack>

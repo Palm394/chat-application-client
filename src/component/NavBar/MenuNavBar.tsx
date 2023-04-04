@@ -1,5 +1,5 @@
 import useModal from "@/hook/useModal";
-import { Menu as MuiMenu, MenuItem, Button, IconButton } from "@mui/material";
+import { Menu as MuiMenu, MenuItem, Button } from "@mui/material";
 import Dialog from "../common/Dialog";
 
 import CheckIcon from '@mui/icons-material/Check';
@@ -38,7 +38,7 @@ export default function Menu({ ...props }: props) {
           content={
             <>input image</>
           }
-          iconAction={[<CloseIcon />, <CheckIcon />]}
+          iconAction={[[<CloseIcon />, modal.onClose], [<CheckIcon />, () => { }]]}
         />
       </MenuItem>
     </MuiMenu>
