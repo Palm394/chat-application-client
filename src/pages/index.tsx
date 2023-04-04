@@ -2,9 +2,9 @@ import Chat from "@/component/chat/Chat";
 import NavBar from "@/component/navbar/NavBar";
 import CreateGroup from "@/component/group/CreateGroup";
 import CenterList from "@/component/chat/CenterList";
-import { Collapse, ListItemButton, Typography } from "@mui/material";
-import theme from "@/config/theme";
+import { Collapse } from "@mui/material";
 import useCollaspe from "@/hook/useCollaspe";
+import CollaspeButton from "@/module/home/CollaspeButton";
 
 export default function Home() {
   const collaspeClient = useCollaspe()
@@ -14,9 +14,11 @@ export default function Home() {
     <>
       <NavBar />
       <CenterList>
-        <ListItemButton sx={{ minHeight: "56px", backgroundColor: theme.palette.primary.main }} onClick={collaspeClient.onClick}>
-          <Typography>Clients (0)</Typography>
-        </ListItemButton>
+        <CollaspeButton
+          name={"Client"}
+          amount={0}
+          onClick={collaspeClient.onClick}
+        />
         <Collapse in={collaspeClient.open}>
           <Chat href="/chat/1" label="client1" type="1-1" />
           <Chat href="/chat/1" label="client1" type="1-1" />
@@ -24,9 +26,11 @@ export default function Home() {
           <Chat href="/chat/1" label="client1" type="1-1" />
           <Chat href="/chat/1" label="client1" type="1-1" />
         </Collapse >
-        <ListItemButton sx={{ minHeight: "56px", backgroundColor: theme.palette.primary.main }} onClick={collaspeServer.onClick}>
-          <Typography>Groups (0)</Typography>
-        </ListItemButton>
+        <CollaspeButton
+          name={"Group"}
+          amount={0}
+          onClick={collaspeServer.onClick}
+        />
         <Collapse in={collaspeServer.open}>
           <Chat href="/group_chat/1" label="client1" type="Group" />
           <Chat href="/group_chat/1" label="client1" type="Group" />
