@@ -1,5 +1,5 @@
 import ChatBox from "@/component/chat/ChatBox";
-import ChatList from "@/component/chat/message/ChatList";
+import ChatList from "@/component/chat/ChatList";
 import Message from "@/component/chat/message/Message";
 import NavBar from "@/component/navbar/NavBarGroup";
 

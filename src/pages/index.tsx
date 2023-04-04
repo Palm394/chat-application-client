@@ -1,7 +1,7 @@
 import ChatListItem from "@/component/chat/message/ChatListItem";
 import NavBar from "@/component/navbar/NavBar";
 import CreateGroup from "@/component/group/CreateGroup";
-import ChatList from "@/component/chat/message/ChatList";
+import ChatList from "@/component/chat/ChatList";
 
 export default function Home() {
   return (
