@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import { ComponentType } from "react";
 
 export default function withFooter<T>(WrapperComponent: ComponentType<T>) {
-  const extra = (props: any) => {
+  const withFooter = (props: any) => {
     return (
       <Box position={"sticky"}
         sx={{
@@ -18,5 +18,5 @@ export default function withFooter<T>(WrapperComponent: ComponentType<T>) {
       </Box>
     )
   }
-  return extra
+  return withFooter
 }

@@ -1,5 +1,5 @@
 import ChatBox from "@/component/chat/ChatBox";
-import CenterLayout from "@/component/MainContent/Layout";
+import ChatList from "@/component/chat/message/ChatList";
 import Message from "@/component/chat/message/Message";
 import NavBar from "@/component/navbar/NavBarGroup";
 
@@ -7,7 +7,7 @@ export default function GroupChat() {
   return (
     <>
       <NavBar />
-      <CenterLayout>
+      <ChatList>
         <Message isMine={false} type={"Group"} />
         <Message isMine={false} type={"Group"} />
         <Message isMine={false} type={"Group"} />
@@ -19,7 +19,7 @@ export default function GroupChat() {
         <Message isMine={false} type={"Group"} />
         <Message isMine={true} type={"Group"} />
         <Message isMine={true} type={"Group"} />
-      </CenterLayout>
+      </ChatList>
       <ChatBox />
     </>
   )

@@ -1,7 +1,8 @@
 import { List as MuiList } from "@mui/material";
+import { ReactNode } from "react";
 
 type props = {
-  children: JSX.Element | JSX.Element[]
+  children: ReactNode[]
 }
 
 export default function List({ ...props }: props) {

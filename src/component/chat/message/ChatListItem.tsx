@@ -8,7 +8,7 @@ type props = {
   type: ChatType
 }
 
-export default function SingleChatList({ ...props }: props) {
+export default function ChatListItem({ ...props }: props) {
   return (
     <ListItemButton href={props.href} sx={{ minHeight: "56px", margin: 0 }}>
       {props.type === "1-1" &&
