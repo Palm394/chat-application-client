@@ -5,7 +5,7 @@ type props = {
   children: JSX.Element[]
 }
 
-function ChatList(props: props) {
+function CenterList(props: props) {
   return (
     <List>
       {props.children}
@@ -13,4 +13,4 @@ function ChatList(props: props) {
   )
 }
 
-export default withFullHeight(ChatList)
+export default withFullHeight(CenterList)

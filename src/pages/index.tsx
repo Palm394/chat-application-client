@@ -1,32 +1,32 @@
-import ChatListItem from "@/component/chat/message/ChatListItem";
+import Chat from "@/component/chat/Chat";
 import NavBar from "@/component/navbar/NavBar";
 import CreateGroup from "@/component/group/CreateGroup";
-import ChatList from "@/component/chat/ChatList";
+import CenterList from "@/component/chat/CenterList";
 
 export default function Home() {
   return (
     <>
       <NavBar />
-      <ChatList>
-        <ChatListItem href="/chat/1" label="client1" type="1-1" />
-        <ChatListItem href="/chat/1" label="client1" type="1-1" />
-        <ChatListItem href="/chat/1" label="client1" type="1-1" />
-        <ChatListItem href="/chat/1" label="client1" type="1-1" />
-        <ChatListItem href="/chat/1" label="client1" type="1-1" />
-      </ChatList>
-      <ChatList>
-        <ChatListItem href="/group_chat/1" label="client1" type="Group" />
-        <ChatListItem href="/group_chat/1" label="client1" type="Group" />
-        <ChatListItem href="/group_chat/1" label="client1" type="Group" />
-        <ChatListItem href="/group_chat/1" label="client1" type="Group" />
-        <ChatListItem href="/group_chat/1" label="client1" type="Group" />
-        <ChatListItem href="/group_chat/1" label="client1" type="Group" />
-        <ChatListItem href="/group_chat/1" label="client1" type="Group" />
-        <ChatListItem href="/group_chat/1" label="client1" type="Group" />
-        <ChatListItem href="/group_chat/1" label="client1" type="Group" />
-        <ChatListItem href="/group_chat/1" label="client1" type="Group" />
-        <ChatListItem href="/group_chat/1" label="client1" type="Group" />
-      </ChatList>
+      <CenterList>
+        <Chat href="/chat/1" label="client1" type="1-1" />
+        <Chat href="/chat/1" label="client1" type="1-1" />
+        <Chat href="/chat/1" label="client1" type="1-1" />
+        <Chat href="/chat/1" label="client1" type="1-1" />
+        <Chat href="/chat/1" label="client1" type="1-1" />
+      </CenterList>
+      <CenterList>
+        <Chat href="/group_chat/1" label="client1" type="Group" />
+        <Chat href="/group_chat/1" label="client1" type="Group" />
+        <Chat href="/group_chat/1" label="client1" type="Group" />
+        <Chat href="/group_chat/1" label="client1" type="Group" />
+        <Chat href="/group_chat/1" label="client1" type="Group" />
+        <Chat href="/group_chat/1" label="client1" type="Group" />
+        <Chat href="/group_chat/1" label="client1" type="Group" />
+        <Chat href="/group_chat/1" label="client1" type="Group" />
+        <Chat href="/group_chat/1" label="client1" type="Group" />
+        <Chat href="/group_chat/1" label="client1" type="Group" />
+        <Chat href="/group_chat/1" label="client1" type="Group" />
+      </CenterList>
       <CreateGroup />
     </>
   )
