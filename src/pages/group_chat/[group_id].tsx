@@ -8,17 +8,17 @@ export default function GroupChat() {
     <>
       <NavBar />
       <CenterList>
-        <Message isMine={false} type={"Group"} />
-        <Message isMine={false} type={"Group"} />
-        <Message isMine={false} type={"Group"} />
-        <Message isMine={false} type={"Group"} />
-        <Message isMine={true} type={"Group"} />
-        <Message isMine={false} type={"Group"} />
-        <Message isMine={false} type={"Group"} />
-        <Message isMine={false} type={"Group"} />
-        <Message isMine={false} type={"Group"} />
-        <Message isMine={true} type={"Group"} />
-        <Message isMine={true} type={"Group"} />
+        <Message text={"sample message"} isMine={false} type={"Group"} />
+        <Message text={"sample message"} isMine={false} type={"Group"} />
+        <Message text={"sample message"} isMine={false} type={"Group"} />
+        <Message text={"sample message"} isMine={false} type={"Group"} />
+        <Message text={"sample message"} isMine={true} type={"Group"} />
+        <Message text={"sample message"} isMine={false} type={"Group"} />
+        <Message text={"sample message"} isMine={false} type={"Group"} />
+        <Message text={"sample message"} isMine={false} type={"Group"} />
+        <Message text={"sample message"} isMine={false} type={"Group"} />
+        <Message text={"sample message"} isMine={true} type={"Group"} />
+        <Message text={"sample message"} isMine={true} type={"Group"} />
       </CenterList>
       <ChatBox />
     </>

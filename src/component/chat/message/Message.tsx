@@ -8,6 +8,7 @@ import BubbleMessage from "./BubbleMessage";
 import { useRouter } from "next/router";
 
 type props = {
+  text: string,
   isMine: boolean,
   avatar?: string,
   type: ChatType,
@@ -15,7 +16,7 @@ type props = {
 }
 
 Message.defaultProps = {
-  senderName: "Sender Name"
+  senderName: "Sender Name",
 }
 
 export default function Message({ ...props }: props) {
@@ -54,7 +55,7 @@ export default function Message({ ...props }: props) {
         {props.type === "Group" && !props.isMine &&
           <Typography sx={{ paddingLeft: theme.spacing(2), paddingBottom: 0 }} variant="body2">{props.senderName}</Typography>
         }
-        <BubbleMessage text={"test message"} isMine={props.isMine} />
+        <BubbleMessage text={props.text} isMine={props.isMine} />
       </Stack>
     </ListItem>
   )
