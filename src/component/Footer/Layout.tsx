@@ -7,7 +7,7 @@ type props = {
 
 export default function FooterLayout({ ...props }: props) {
   return (
-    <Box position={"fixed"}
+    <Box position={"sticky"}
       sx={{
         width: "100%",
         backgroundColor: theme.palette.primary.main,
