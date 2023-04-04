@@ -4,6 +4,7 @@ import useModal from "@/hook/useModal";
 import { ChatType } from "@/type/Chat";
 import { Avatar, Button, ListItem, Typography } from "@mui/material";
 import MessageIcon from '@mui/icons-material/Message';
+import BubbleMessage from "./BubbleMessage";
 
 type props = {
   isMine: boolean,
@@ -42,7 +43,7 @@ export default function Message({ ...props }: props) {
           />
         </>
       }
-      <Typography>test message</Typography>
+      <BubbleMessage text={"test message"} isMine={props.isMine} />
     </ListItem>
   )
 }
