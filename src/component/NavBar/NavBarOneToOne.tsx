@@ -1,4 +1,4 @@
-import { IconButton } from "@mui/material";
+import { IconButton, Typography } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import NavBarLayout from "./NavBarLayout";
 import useMenu from "@/hook/useMenu";
@@ -7,7 +7,9 @@ import MenuNavBar from "./MenuNavBar";
 export default function NavBarOneToOne() {
   const menu = useMenu()
   return (
-    <NavBarLayout avatar="c" text={"client1"}>
+    <NavBarLayout
+      avatar="c"
+      displayComponent={<Typography>{"client1"}</Typography>}>
       <>
         <IconButton onClick={menu.handleOpenMenu}>
           <MoreVertIcon />

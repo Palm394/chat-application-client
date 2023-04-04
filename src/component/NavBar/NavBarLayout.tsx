@@ -1,8 +1,8 @@
-import { AppBar, Avatar, Toolbar, Typography } from "@mui/material";
+import { AppBar, Avatar, Box, Toolbar, Typography } from "@mui/material";
 
 type props = {
   avatar?: string,
-  text: string,
+  displayComponent: JSX.Element,
   children?: JSX.Element
 }
 
@@ -17,9 +17,9 @@ export default function ProfileLayout({ ...props }: props) {
         {props.avatar &&
           <Avatar sx={{ marginRight: "3vw" }}>{props.avatar}</Avatar>
         }
-        <Typography component="div" sx={{ flexGrow: 1 }}>
-          {props.text}
-        </Typography>
+        <Box sx={{ flexGrow: 1 }}>
+          {props.displayComponent}
+        </Box>
         {props.children}
       </Toolbar>
     </AppBar>
