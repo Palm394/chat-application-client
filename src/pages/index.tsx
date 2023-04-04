@@ -1,8 +1,8 @@
 import CenterLayout from "@/component/MainContent/Layout";
-import SingleChatList from "@/component/MainContent/SingleChatList";
-import NavBar from "@/component/NavBar/NavBar";
+import SingleChatList from "@/component/chat/message/SingleChatList";
+import NavBar from "@/component/navbar/NavBar";
 import List from "@/component/common/List";
-import CreateGroup from "@/component/footer/CreateGroup";
+import CreateGroup from "@/component/group/CreateGroup";
 
 export default function Home() {
   return (
