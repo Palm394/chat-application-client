@@ -25,9 +25,9 @@ export default function Message({ ...props }: props) {
             <Avatar
               sx={{
                 margin: props.isMine ?
-                  `0 0 0 ${theme.spacing(5)}`
+                  `0 0 0 ${theme.spacing(2)}`
                   :
-                  `0 ${theme.spacing(5)} 0 0`
+                  `0 ${theme.spacing(2)} 0 0`
               }} />
           </Button>
           <Dialog
