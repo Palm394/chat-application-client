@@ -1,24 +1,32 @@
 import theme from "@/config/theme";
 import { IconButton, TextField as MuiTextField, styled } from "@mui/material";
-import SendIcon from '@mui/icons-material/Send';
-import { useState } from "react";
+import SendIcon from "@mui/icons-material/Send";
+import { useContext, useState } from "react";
 import withFooter from "@/hoc/Layout/withFooter";
+import { SocketContext } from "@/context/socket";
 
 const TextField = styled(MuiTextField)({
-  '.MuiOutlinedInput-root': {
-    '&': {
-      borderColor: 'none',
+  ".MuiOutlinedInput-root": {
+    "&": {
+      borderColor: "none",
       backgroundColor: theme.palette.background.default,
-      borderRadius: '30px'
+      borderRadius: "30px",
     },
-    '&:hover': {
-      borderColor: 'none',
+    "&:hover": {
+      borderColor: "none",
     },
   },
 });
 
 function ChatBox() {
-  const [value, setValue] = useState<string>("")
+  const socket = useContext(SocketContext);
+
+  const [value, setValue] = useState<string>("");
+
+  function handleSendMessage() {
+    socket.emit("message", value);
+    setValue("");
+  }
 
   return (
     <TextField
@@ -29,14 +37,13 @@ function ChatBox() {
       sx={{ borderRadius: 8 }}
       InputProps={{
         endAdornment: value.length > 0 && (
-          <IconButton>
+          <IconButton onClick={handleSendMessage}>
             <SendIcon />
           </IconButton>
-        )
+        ),
       }}
     />
-  )
+  );
 }
 
-export default withFooter(ChatBox)
-
+export default withFooter(ChatBox);
