@@ -5,10 +5,28 @@ import CenterList from "@/component/chat/CenterList";
 import { Collapse } from "@mui/material";
 import useCollaspe from "@/hook/useCollaspe";
 import CollaspeButton from "@/module/home/CollaspeButton";
+import { SocketContext } from "@/context/socket";
+import { useContext, useEffect, useState } from "react";
 
 export default function Home() {
+  const socket = useContext(SocketContext);
   const collaspeClient = useCollaspe();
   const collaspeServer = useCollaspe();
+
+  const [groups, setGroups] = useState<any>({});
+
+  useEffect(() => {
+    const groupListener = (group: any) => {
+      setGroups((prevGroups: any) => {
+        const newGroups = { ...prevGroups };
+        newGroups[group.id] = group;
+        return newGroups;
+      });
+    };
+
+    socket.on("group", groupListener);
+    socket.emit("getGroups");
+  }, [socket]);
 
   return (
     <>
@@ -24,17 +42,14 @@ export default function Home() {
         </Collapse>
         <CollaspeButton name={"Group"} amount={0} onClick={collaspeServer.onClick} />
         <Collapse in={collaspeServer.open}>
-          <Chat href="/group_chat/1" label="client1" type="Group" />
-          <Chat href="/group_chat/1" label="client1" type="Group" />
-          <Chat href="/group_chat/1" label="client1" type="Group" />
-          <Chat href="/group_chat/1" label="client1" type="Group" />
-          <Chat href="/group_chat/1" label="client1" type="Group" />
-          <Chat href="/group_chat/1" label="client1" type="Group" />
-          <Chat href="/group_chat/1" label="client1" type="Group" />
-          <Chat href="/group_chat/1" label="client1" type="Group" />
-          <Chat href="/group_chat/1" label="client1" type="Group" />
-          <Chat href="/group_chat/1" label="client1" type="Group" />
-          <Chat href="/group_chat/1" label="client1" type="Group" />
+          {[...Object.values(groups)].map((group: any, index: any) => (
+            <Chat
+              key={index}
+              href={`/group_chat/${JSON.stringify(group.id)}`}
+              label={group.name}
+              type="Group"
+            />
+          ))}
         </Collapse>
       </CenterList>
       <CreateGroup />

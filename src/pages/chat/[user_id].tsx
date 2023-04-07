@@ -4,9 +4,10 @@ import NavBar from "@/component/NavBar/NavBarOneToOne";
 import CenterList from "@/component/chat/CenterList";
 import { useContext, useEffect, useState } from "react";
 import { SocketContext } from "@/context/socket";
-import router from "next/router";
+import { useRouter } from "next/router";
 
 export default function Chat() {
+  const router = useRouter();
   const socket = useContext(SocketContext);
   const [messages, setMessages] = useState<any>({});
 
@@ -39,7 +40,7 @@ export default function Chat() {
             <Message key={index} text={message.value} type={"1-1"} isMine={true} />
           ))}
       </CenterList>
-      <ChatBox />
+      <ChatBox chatID={router.query.user_id} />
     </>
   );
 }
