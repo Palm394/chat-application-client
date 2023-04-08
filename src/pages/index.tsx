@@ -20,11 +20,11 @@ export default function Home() {
           onClick={collaspeClient.onClick}
         />
         <Collapse in={collaspeClient.open}>
-          <Chat href="/chat/1" label="client1" type="1-1" />
-          <Chat href="/chat/1" label="client1" type="1-1" />
-          <Chat href="/chat/1" label="client1" type="1-1" />
-          <Chat href="/chat/1" label="client1" type="1-1" />
-          <Chat href="/chat/1" label="client1" type="1-1" />
+          <Chat href="/chat/1" label="client1" type="Direct" />
+          <Chat href="/chat/1" label="client1" type="Direct" />
+          <Chat href="/chat/1" label="client1" type="Direct" />
+          <Chat href="/chat/1" label="client1" type="Direct" />
+          <Chat href="/chat/1" label="client1" type="Direct" />
         </Collapse >
         <CollaspeButton
           name={"Group"}

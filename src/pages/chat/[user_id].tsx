@@ -8,24 +8,24 @@ export default function Chat() {
     <>
       <NavBar />
       <CenterList>
-        <Message text={"sample message"} type={"1-1"} isMine={false} />
-        <Message text={"sample message"} type={"1-1"} isMine={true} />
-        <Message text={"sample message"} type={"1-1"} isMine={false} />
-        <Message text={"sample message"} type={"1-1"} isMine={true} />
-        <Message text={"sample message"} type={"1-1"} isMine={false} />
-        <Message text={"sample message"} type={"1-1"} isMine={true} />
-        <Message text={"sample message"} type={"1-1"} isMine={false} />
-        <Message text={"sample message"} type={"1-1"} isMine={true} />
-        <Message text={"sample message"} type={"1-1"} isMine={false} />
-        <Message text={"sample message"} type={"1-1"} isMine={true} />
-        <Message text={"sample message"} type={"1-1"} isMine={false} />
-        <Message text={"sample message"} type={"1-1"} isMine={true} />
-        <Message text={"sample message"} type={"1-1"} isMine={false} />
-        <Message text={"sample message"} type={"1-1"} isMine={true} />
-        <Message text={"sample message"} type={"1-1"} isMine={false} />
-        <Message text={"sample message"} type={"1-1"} isMine={true} />
-        <Message text={"sample message"} type={"1-1"} isMine={false} />
-        <Message text={"sample message"} type={"1-1"} isMine={true} />
+        <Message text={"sample message"} type={"Direct"} isMine={false} />
+        <Message text={"sample message"} type={"Direct"} isMine={true} />
+        <Message text={"sample message"} type={"Direct"} isMine={false} />
+        <Message text={"sample message"} type={"Direct"} isMine={true} />
+        <Message text={"sample message"} type={"Direct"} isMine={false} />
+        <Message text={"sample message"} type={"Direct"} isMine={true} />
+        <Message text={"sample message"} type={"Direct"} isMine={false} />
+        <Message text={"sample message"} type={"Direct"} isMine={true} />
+        <Message text={"sample message"} type={"Direct"} isMine={false} />
+        <Message text={"sample message"} type={"Direct"} isMine={true} />
+        <Message text={"sample message"} type={"Direct"} isMine={false} />
+        <Message text={"sample message"} type={"Direct"} isMine={true} />
+        <Message text={"sample message"} type={"Direct"} isMine={false} />
+        <Message text={"sample message"} type={"Direct"} isMine={true} />
+        <Message text={"sample message"} type={"Direct"} isMine={false} />
+        <Message text={"sample message"} type={"Direct"} isMine={true} />
+        <Message text={"sample message"} type={"Direct"} isMine={false} />
+        <Message text={"sample message"} type={"Direct"} isMine={true} />
       </CenterList>
       <ChatBox />
     </>
