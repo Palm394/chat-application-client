@@ -10,14 +10,25 @@ import withFooter from "@/hoc/Layout/withFooter";
 
 function CreateGroup() {
   const [newGroupName, setNewGroupName] = useState<string>("")
+  const [isError, setIsError] = useState<boolean>(false)
+
   const modal = useModal()
+
+  function handleChangeNewGroupName(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void {
+    if (event.target.value.length === 0) {
+      setIsError(true)
+    } else {
+      setIsError(false)
+    }
+    setNewGroupName(event.target.value)
+  }
 
   return (
     <>
       <Box
         sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
         <Typography sx={{ alignContent: "center" }}>Create Group</Typography>
-        <IconButton onClick={modal.onOpen}>
+        <IconButton onClick={() => { setNewGroupName(""); setIsError(false); modal.onOpen() }}>
           <AddIcon />
         </IconButton>
       </Box>
@@ -27,8 +38,11 @@ function CreateGroup() {
         header={"create new group"}
         content={
           <TextField
-            onChange={(e) => { setNewGroupName(e.target.value) }}
-            helperText={`${newGroupName?.length}/20`}
+            onChange={handleChangeNewGroupName}
+            inputProps={{ maxLength: 20 }}
+            helperText={!isError ? `${newGroupName.length}/20` : "group name cannot be blank"}
+            error={isError}
+            autoFocus
           />
         }
         iconAction={
