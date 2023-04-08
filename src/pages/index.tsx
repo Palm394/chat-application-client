@@ -34,23 +34,26 @@ export default function Home() {
       <CenterList>
         <CollaspeButton name={"Client"} amount={0} onClick={collaspeClient.onClick} />
         <Collapse in={collaspeClient.open}>
-          <Chat href="/chat/1" label="client1" type="1-1" />
-          <Chat href="/chat/2" label="client1" type="1-1" />
-          <Chat href="/chat/3" label="client1" type="1-1" />
-          <Chat href="/chat/4" label="client1" type="1-1" />
-          <Chat href="/chat/5" label="client1" type="1-1" />
+          <Chat href="/chat/1" label="client1" type="Direct" />
+          <Chat href="/chat/1" label="client1" type="Direct" />
+          <Chat href="/chat/1" label="client1" type="Direct" />
+          <Chat href="/chat/1" label="client1" type="Direct" />
+          <Chat href="/chat/1" label="client1" type="Direct" />
         </Collapse>
         <CollaspeButton name={"Group"} amount={0} onClick={collaspeServer.onClick} />
         <Collapse in={collaspeServer.open}>
-          {[...Object.values(groups)].map((group: any, index: any) => (
-            <Chat
-              key={index}
-              href={`/group_chat/${JSON.stringify(group._id)}`}
-              label={group.name}
-              type="Group"
-            />
-          ))}
+          <Collapse in={collaspeServer.open}>
+            {[...Object.values(groups)].map((group: any, index: any) => (
+              <Chat
+                key={index}
+                href={`/group_chat/${JSON.stringify(group._id)}`}
+                label={group.name}
+                type="Group"
+              />
+            ))}
+          </Collapse>
         </Collapse>
+        <CollaspeButton name={"Group"} amount={0} onClick={collaspeServer.onClick} />
       </CenterList>
       <CreateGroup />
     </>

@@ -11,7 +11,7 @@ type props = {
 export default function Chat({ ...props }: props) {
   return (
     <ListItemButton href={props.href} sx={{ minHeight: "56px", margin: 0 }}>
-      {props.type === "1-1" &&
+      {props.type === "Direct" &&
         <Avatar sx={{ marginRight: "3vw" }} />
       }
       <Typography sx={{ flexGrow: 1 }}>{props.label}</Typography>

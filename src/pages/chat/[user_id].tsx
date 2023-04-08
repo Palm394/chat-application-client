@@ -37,7 +37,7 @@ export default function Chat() {
         {[...Object.values(messages)]
           .sort((a: any, b: any) => a.time - b.time)
           .map((message: any, index: any) => (
-            <Message key={index} text={message.value} type={"1-1"} isMine={true} />
+            <Message key={index} text={message.value} type={"Direct"} isMine={true} />
           ))}
       </CenterList>
       <ChatBox chatID={router.query.user_id} />

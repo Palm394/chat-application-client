@@ -1,1 +1,1 @@
-export type ChatType = "Group" | "1-1";
+export type ChatType = "Group" | "Direct";
