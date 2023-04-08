@@ -43,7 +43,7 @@ export default function Message({ ...props }: props) {
             onClose={modal.onClose}
             content={
               <>
-                <Avatar sx={{ margin: "auto" }} />
+                <Avatar sx={{ margin: "auto", width: 56, height: 56 }} />
                 <Typography>some profile</Typography>
               </>
             }
