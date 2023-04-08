@@ -1,5 +1,5 @@
 import Chat from "@/component/chat/Chat";
-import NavBar from "@/component/NavBar/NavBar";
+import NavBar from "@/component/navbar/NavBar";
 import CreateGroup from "@/component/group/CreateGroup";
 import CenterList from "@/component/chat/CenterList";
 import { Collapse } from "@mui/material";
@@ -19,7 +19,7 @@ export default function Home() {
     const groupListener = (group: any) => {
       setGroups((prevGroups: any) => {
         const newGroups = { ...prevGroups };
-        newGroups[group.id] = group;
+        newGroups[group._id] = group;
         return newGroups;
       });
     };
@@ -45,7 +45,7 @@ export default function Home() {
           {[...Object.values(groups)].map((group: any, index: any) => (
             <Chat
               key={index}
-              href={`/group_chat/${JSON.stringify(group.id)}`}
+              href={`/group_chat/${JSON.stringify(group._id)}`}
               label={group.name}
               type="Group"
             />

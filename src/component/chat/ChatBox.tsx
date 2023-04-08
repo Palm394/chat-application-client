@@ -18,13 +18,18 @@ const TextField = styled(MuiTextField)({
   },
 });
 
-function ChatBox() {
+type props = {
+  chatId: string;
+};
+
+function ChatBox(props: props) {
   const socket = useContext(SocketContext);
 
   const [value, setValue] = useState<string>("");
 
   function handleSendMessage() {
-    socket.emit("message", value);
+    const message_identifier = { chatId: props.chatId, message: value };
+    socket.emit("message", message_identifier);
     setValue("");
   }
 
