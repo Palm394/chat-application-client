@@ -4,7 +4,7 @@ import NavBarLayout from "./NavBarLayout";
 import useMenu from "@/hook/useMenu";
 import MenuNavBar from "./MenuNavBar";
 
-export default function NavBarOneToOne() {
+export default function NavBarDirect() {
   const menu = useMenu()
   return (
     <NavBarLayout

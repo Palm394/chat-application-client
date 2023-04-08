@@ -1,6 +1,6 @@
 import ChatBox from "@/component/chat/ChatBox";
 import Message from "@/component/chat/message/Message";
-import NavBar from "@/component/navbar/NavBarOneToOne";
+import NavBar from "@/component/navbar/NavBarDirect";
 import CenterList from "@/component/chat/CenterList";
 
 export default function Chat() {
