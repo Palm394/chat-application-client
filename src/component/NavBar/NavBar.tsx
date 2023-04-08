@@ -14,6 +14,16 @@ type props = {
 export default function NavBarIndex({ ...props }: props) {
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
     const [newName, setNewName] = useState<string>("")
+    const [isError, setIsError] = useState<boolean>(false)
+
+    function handleChangeNewName(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void {
+        if (event.target.value.length === 0) {
+            setIsError(true)
+        } else {
+            setIsError(false)
+        }
+        setNewName(event.target.value)
+    }
     function openEditMode(): void {
         setIsEditMode(true)
     }
@@ -24,20 +34,26 @@ export default function NavBarIndex({ ...props }: props) {
         <AppBar
             position="sticky"
             sx={{
-                borderBottom: "2px solid #000000"
+                borderBottom: "2px solid #000000",
+                height: "80px",
+                justifyContent: "center"
             }}
         >
             <Toolbar>
-                <Avatar sx={{ marginRight: "3vw" }}>{props.avatar}</Avatar>
+                <Avatar sx={{ width: 56, height: 56, marginRight: "3vw" }}>{props.avatar}</Avatar>
                 <Box sx={{ flexGrow: 1 }}>
                     {isEditMode ?
                         <TextField
-                            onChange={e => setNewName(e.target.value)}
-                            helperText={`${newName.length}/20`}
+                            onChange={handleChangeNewName}
+                            inputProps={{ maxLength: 20 }}
+                            helperText={!isError ? `${newName.length}/20` : "nickname cannot be blank"}
+                            error={isError}
                             autoFocus
+                            size="small"
+                            margin="dense"
                         />
                         :
-                        <Typography> Username</Typography>
+                        <Typography>Username</Typography>
                     }
                 </Box>
                 {isEditMode ?
