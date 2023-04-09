@@ -7,8 +7,6 @@ import EditIcon from '@mui/icons-material/Edit';
 
 type props = {
     avatar?: string,
-    displayComponent: JSX.Element,
-    children?: JSX.Element
 }
 
 export default function NavBarIndex({ ...props }: props) {
