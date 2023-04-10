@@ -5,7 +5,7 @@ type props = {
   onClose: () => void,
   header?: string,
   content: JSX.Element,
-  iconAction: [JSX.Element, () => void][]
+  iconAction: [JSX.Element, () => void][] | null
 }
 
 export default function Dialog({ ...props }: props) {
@@ -16,7 +16,7 @@ export default function Dialog({ ...props }: props) {
         <Stack spacing={0}>
           <DialogContent sx={{ padding: "0 50px" }}>{props.content}</DialogContent>
           <DialogActions sx={{ justifyContent: "center" }}>
-            {props.iconAction.map((icon) => {
+            {props.iconAction?.map((icon) => {
               const [Icon, onClick] = [...icon]
               return (
                 <IconButton onClick={onClick}>

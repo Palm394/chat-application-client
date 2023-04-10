@@ -47,7 +47,7 @@ export default function Message({ ...props }: props) {
                 <Typography>some profile</Typography>
               </>
             }
-            iconAction={[[<MessageIcon />, () => { router.push("/chat/1") }]]}
+            iconAction={!props.isMine ? [[<MessageIcon />, () => { router.push("/chat/1") }]] : null}
           />
         </>
       }
