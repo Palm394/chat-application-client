@@ -1,9 +1,10 @@
 import { AppBar, Avatar, Box, IconButton, TextField, Toolbar, Typography } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
+import { UserContext } from "@/context/UserContext";
 
 type props = {
     avatar?: string,
@@ -13,6 +14,7 @@ export default function NavBarIndex({ ...props }: props) {
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
     const [newName, setNewName] = useState<string>("")
     const [isError, setIsError] = useState<boolean>(false)
+    const userData = useContext(UserContext)
 
     function handleChangeNewName(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void {
         if (event.target.value.length === 0) {
@@ -51,7 +53,7 @@ export default function NavBarIndex({ ...props }: props) {
                             margin="dense"
                         />
                         :
-                        <Typography>Username</Typography>
+                        <Typography>{userData?.user?.username}</Typography>
                     }
                 </Box>
                 {isEditMode ?
