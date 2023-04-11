@@ -7,8 +7,8 @@ import { useState } from 'react'
 
 export default function App({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<User>({
-    username: "default username in context",
-    user_id: "default user_id in context"
+    username: "default username",
+    user_id: "default user_id"
   })
 
   return (
