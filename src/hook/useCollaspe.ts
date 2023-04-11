@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export default function useCollaspe() {
-  const [open, setOpen] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
 
   function onClick(): void {
     setOpen(!open);
