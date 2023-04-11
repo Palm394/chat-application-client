@@ -25,6 +25,7 @@ export default function Home() {
       setUsers((prevUsers: any) => {
         const newUsers = { ...prevUsers };
         newUsers[user._id] = user;
+        console.log(user);
         return newUsers;
       });
     };
@@ -59,12 +60,7 @@ export default function Home() {
         />
         <Collapse in={collaspeClient.open}>
           {[...Object.values(users)].map((user: any, index: any) => (
-            <Chat
-              key={index}
-              href={`/group_chat/${user._id}`}
-              label={user.username}
-              type="Direct"
-            />
+            <Chat key={index} href={`/chat/${user.chat_id}`} label={user.username} type="Direct" />
           ))}
         </Collapse>
         <CollaspeButton
