@@ -10,7 +10,7 @@ import { useContext, useEffect, useState } from "react";
 export default function Login() {
   const router = useRouter();
   const socket = useContext(SocketContext);
-  const userContext = useContext(UserContext);
+  const userData = useContext(UserContext);
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -23,9 +23,9 @@ export default function Login() {
   });
 
   useEffect(() => {
-    if (userContext && response && response.userId) {
+    if (userData && response && response.userId) {
       if (response.message === SOCKET_MESSAGE.SUCCESS) {
-        userContext.setUser({ username: username, user_id: response.userId });
+        userData.setUser({ username: username, user_id: response.userId });
         socket.off("login_response");
         router.push("/");
         return;
