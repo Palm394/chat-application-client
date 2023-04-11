@@ -1,6 +1,7 @@
 import theme from "@/config/theme";
 import { SocketContext } from "@/context/SocketContext";
 import { UserContext } from "@/context/UserContext";
+import { SOCKET_MESSAGE } from "@/type/Constant";
 import { LoginResType } from "@/type/Socket";
 import { Button, Stack, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
@@ -21,15 +22,9 @@ export default function Login() {
     console.log(res.message);
   });
 
-  function onSubmit(): void {
-    socket.emit("login", { username: username, password: password });
-    return;
-  }
-
   useEffect(() => {
     if (userContext && response && response.userId) {
-      console.log(response);
-      if (response.message === "Success") {
+      if (response.message === SOCKET_MESSAGE.SUCCESS) {
         userContext.setUser({ username: username, user_id: response.userId });
         socket.off("login_response");
         router.push("/");
@@ -37,6 +32,11 @@ export default function Login() {
       }
     }
   }, [socket, response]);
+
+  function onSubmit(): void {
+    socket.emit("login", { username: username, password: password });
+    return;
+  }
 
   return (
     <>
