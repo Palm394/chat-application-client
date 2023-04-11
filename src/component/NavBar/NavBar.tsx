@@ -16,6 +16,14 @@ export default function NavBarIndex({ ...props }: props) {
     const [isError, setIsError] = useState<boolean>(false)
     const userData = useContext(UserContext)
 
+    function changeUsername(): void {
+        if (newName.length === 0) {
+            setIsError(true)
+            return
+        }
+        userData?.setUser({ ...userData.user, username: newName })
+        closeEditMode()
+    }
     function handleChangeNewName(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void {
         if (event.target.value.length === 0) {
             setIsError(true)
@@ -28,6 +36,7 @@ export default function NavBarIndex({ ...props }: props) {
         setIsEditMode(true)
     }
     function closeEditMode(): void {
+        setNewName("")
         setIsEditMode(false)
     }
     return (
@@ -45,6 +54,7 @@ export default function NavBarIndex({ ...props }: props) {
                     {isEditMode ?
                         <TextField
                             onChange={handleChangeNewName}
+                            value={newName}
                             inputProps={{ maxLength: 20 }}
                             helperText={!isError ? `${newName.length}/20` : "nickname cannot be blank"}
                             error={isError}
@@ -59,7 +69,7 @@ export default function NavBarIndex({ ...props }: props) {
                 {isEditMode ?
                     <Box>
                         <IconButton onClick={closeEditMode}><CloseIcon /></IconButton>
-                        <IconButton><CheckIcon /></IconButton>
+                        <IconButton onClick={changeUsername}><CheckIcon /></IconButton>
                     </Box>
                     :
                     <IconButton onClick={openEditMode}>
