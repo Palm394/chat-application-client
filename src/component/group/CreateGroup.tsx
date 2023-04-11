@@ -1,34 +1,58 @@
 import { Box, IconButton, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
-import AddIcon from '@mui/icons-material/Add';
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
+import AddIcon from "@mui/icons-material/Add";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 import useModal from "@/hook/useModal";
 import Dialog from "../common/Dialog";
 import withFooter from "@/hoc/Layout/withFooter";
+import { SocketContext } from "@/context/SocketContext";
 
 function CreateGroup() {
-  const [newGroupName, setNewGroupName] = useState<string>("")
-  const [isError, setIsError] = useState<boolean>(false)
+  const socket = useContext(SocketContext);
 
-  const modal = useModal()
+  const [newGroupName, setNewGroupName] = useState<string>("");
+  const [isError, setIsError] = useState<boolean>(false);
 
-  function handleChangeNewGroupName(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void {
+  const modal = useModal();
+
+  function handleChangeNewGroupName(
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ): void {
     if (event.target.value.length === 0) {
-      setIsError(true)
+      setIsError(true);
     } else {
-      setIsError(false)
+      setIsError(false);
     }
-    setNewGroupName(event.target.value)
+    setNewGroupName(event.target.value);
+  }
+
+  function handleCreateGroup() {
+    socket.on("create_group_response", (res: any) => console.log(res.message));
+    socket.emit("createGroup", newGroupName);
+    modal.onClose();
+    setNewGroupName("");
   }
 
   return (
     <>
       <Box
-        sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
         <Typography sx={{ alignContent: "center" }}>Create Group</Typography>
-        <IconButton onClick={() => { setNewGroupName(""); setIsError(false); modal.onOpen() }}>
+        <IconButton
+          onClick={() => {
+            setNewGroupName("");
+            setIsError(false);
+            modal.onOpen();
+          }}
+        >
           <AddIcon />
         </IconButton>
       </Box>
@@ -45,15 +69,13 @@ function CreateGroup() {
             autoFocus
           />
         }
-        iconAction={
-          [
-            [<CloseIcon />, modal.onClose],
-            [<CheckIcon />, () => { }]
-          ]
-        }
+        iconAction={[
+          [<CloseIcon />, modal.onClose],
+          [<CheckIcon />, handleCreateGroup],
+        ]}
       />
     </>
-  )
+  );
 }
 
-export default withFooter(CreateGroup)
+export default withFooter(CreateGroup);
