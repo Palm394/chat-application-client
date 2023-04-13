@@ -9,6 +9,9 @@ import { useRouter } from "next/router";
 import { useContext } from "react";
 import { UserContext } from "@/context/UserContext";
 
+import { getCookie } from 'cookies-next';
+
+
 type props = {
   text: string,
   isMine: boolean,
@@ -47,7 +50,7 @@ export default function Message({ ...props }: props) {
             content={
               <>
                 <Avatar sx={{ margin: "15px auto", width: 56, height: 56 }} />
-                <Typography>{props.isMine ? currentUser?.user.username : props.senderName}</Typography>
+                <Typography>{props.isMine ? getCookie("username") : props.senderName}</Typography>
               </>
             }
             iconAction={!props.isMine ? [[<MessageIcon />, () => { router.push("/chat/1") }]] : null}
