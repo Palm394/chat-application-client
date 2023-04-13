@@ -1,10 +1,11 @@
 import { AppBar, Avatar, Box, IconButton, TextField, Toolbar, Typography } from "@mui/material";
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
-import { UserContext } from "@/context/UserContext";
+import useLocalStorage from "@/hook/useLocalStorage";
+import { User } from "@/type/User";
 
 type props = {
     avatar?: string,
@@ -14,14 +15,14 @@ export default function NavBarIndex({ ...props }: props) {
     const [isEditMode, setIsEditMode] = useState<boolean>(false)
     const [newName, setNewName] = useState<string>("")
     const [isError, setIsError] = useState<boolean>(false)
-    const userData = useContext(UserContext)
+    const [userData, setUserData] = useLocalStorage<User>("user_data")
 
     function changeUsername(): void {
         if (newName.length === 0) {
             setIsError(true)
             return
         }
-        userData?.setUser({ ...userData.user, username: newName })
+        setUserData({ ...userData, username: newName })
         closeEditMode()
     }
     function handleChangeNewName(event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void {
@@ -63,7 +64,7 @@ export default function NavBarIndex({ ...props }: props) {
                             margin="dense"
                         />
                         :
-                        <Typography>{userData?.user?.username}</Typography>
+                        <Typography>{userData.username}</Typography>
                     }
                 </Box>
                 {isEditMode ?

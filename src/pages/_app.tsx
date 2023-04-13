@@ -1,27 +1,32 @@
 import theme from "@/config/theme";
 import { socket, SocketContext } from "@/context/SocketContext";
-import { UserContext } from "@/context/UserContext";
 import { User } from "@/type/User";
 import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import type { AppProps } from "next/app";
-import { useState } from "react";
+import dynamic from "next/dynamic";
 
-export default function App({ Component, pageProps }: AppProps) {
-  const [user, setUser] = useState<User>({
-    username: "default username",
-    user_id: "default user_id",
-  });
+function App({ Component, pageProps }: AppProps) {
+
+  const default_user: User = {
+    username: "",
+    user_id: ""
+  }
+  if (!window.localStorage.getItem("user_data")) {
+    window.localStorage.setItem("user_data", JSON.stringify(default_user))
+  }
 
   return (
     <SocketContext.Provider value={socket}>
-      <UserContext.Provider value={{ user, setUser }}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-            <Component {...pageProps} />
-          </Box>
-        </ThemeProvider>
-      </UserContext.Provider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+          <Component {...pageProps} />
+        </Box>
+      </ThemeProvider>
     </SocketContext.Provider>
   );
 }
+
+export default dynamic(() => Promise.resolve(App), {
+  ssr: false,
+});

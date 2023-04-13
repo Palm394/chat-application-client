@@ -6,8 +6,9 @@ import { Avatar, Button, ListItem, Stack, Typography } from "@mui/material";
 import MessageIcon from '@mui/icons-material/Message';
 import BubbleMessage from "./BubbleMessage";
 import { useRouter } from "next/router";
-import { useContext } from "react";
-import { UserContext } from "@/context/UserContext";
+import useLocalStorage from "@/hook/useLocalStorage";
+import { User } from "@/type/User";
+import { useEffect } from "react";
 
 type props = {
   text: string,
@@ -22,7 +23,7 @@ Message.defaultProps = {
 }
 
 export default function Message({ ...props }: props) {
-  const currentUser = useContext(UserContext)
+  const [currentUser, setCurrentUser] = useLocalStorage<User>("user_data")
   const router = useRouter()
   const modal = useModal()
 
@@ -47,7 +48,7 @@ export default function Message({ ...props }: props) {
             content={
               <>
                 <Avatar sx={{ margin: "15px auto", width: 56, height: 56 }} />
-                <Typography>{props.isMine ? currentUser?.user.username : props.senderName}</Typography>
+                <Typography>{props.isMine ? currentUser.username : props.senderName}</Typography>
               </>
             }
             iconAction={!props.isMine ? [[<MessageIcon />, () => { router.push("/chat/1") }]] : null}
