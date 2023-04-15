@@ -7,11 +7,12 @@ import useCollaspe from "@/hook/useCollaspe";
 import CollaspeButton from "@/module/home/CollaspeButton";
 import { useContext, useEffect, useState } from "react";
 import { SocketContext } from "@/context/SocketContext";
-import { UserContext } from "@/context/UserContext";
+import useLocalStorage from "@/hook/useLocalStorage";
+import { User } from "@/type/User";
 
 export default function Home() {
   const socket = useContext(SocketContext);
-  const userData = useContext(UserContext);
+  const [currentUser, setCurrentUser] = useLocalStorage<User>("user_data");
 
   const collaspeClient = useCollaspe();
   const collaspeServer = useCollaspe();
@@ -31,10 +32,7 @@ export default function Home() {
     };
     socket.on("get_users_response", (res: any) => console.log(res.message));
     socket.on("user", userListener);
-    // if (userData) {
-    socket.emit("getUsers", "64339a88ede9b0fc8a482d45");
-    // }
-    console.log(userData?.user);
+    socket.emit("getUsers", currentUser.user_id);
 
     // retreive group
     const groupListener = (group: any) => {

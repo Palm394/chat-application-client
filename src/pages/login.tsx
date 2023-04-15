@@ -1,8 +1,9 @@
 import theme from "@/config/theme";
 import { SocketContext } from "@/context/SocketContext";
-import { UserContext } from "@/context/UserContext";
+import useLocalStorage from "@/hook/useLocalStorage";
 import { SOCKET_MESSAGE } from "@/type/Constant";
 import { LoginResType } from "@/type/Socket";
+import { User } from "@/type/User";
 import { Button, Stack, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
@@ -10,7 +11,7 @@ import { useContext, useEffect, useState } from "react";
 export default function Login() {
   const router = useRouter();
   const socket = useContext(SocketContext);
-  const userData = useContext(UserContext);
+  const [currentUser, setCurrentUser] = useLocalStorage<User>("user_data");
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -23,9 +24,9 @@ export default function Login() {
   });
 
   useEffect(() => {
-    if (userData && response && response.userId) {
+    if (response && response.userId) {
       if (response.message === SOCKET_MESSAGE.SUCCESS) {
-        userData.setUser({ username: username, user_id: response.userId });
+        setCurrentUser({ username: username, user_id: response.userId });
         socket.off("login_response");
         router.push("/");
         return;
