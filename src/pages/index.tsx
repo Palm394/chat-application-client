@@ -20,7 +20,7 @@ export default function Home() {
   const [users, setUsers] = useState<any>({});
   const [groups, setGroups] = useState<any>({});
 
-  useEffect(() => {
+  function getUsers() {
     // retreive users
     const userListener = (user: any) => {
       setUsers((prevUsers: any) => {
@@ -32,9 +32,11 @@ export default function Home() {
     };
     socket.on("get_users_response", (res: any) => console.log(res.message));
     socket.on("user", userListener);
-    socket.emit("getUsers", currentUser.user_id);
+    socket.emit("getUsers", currentUser.userId);
+  }
 
-    // retreive group
+  function getGroups() {
+    // retreive groups
     const groupListener = (group: any) => {
       setGroups((prevGroups: any) => {
         const newGroups = { ...prevGroups };
@@ -45,6 +47,11 @@ export default function Home() {
     socket.on("get_groups_response", (res: any) => console.log(res.message));
     socket.on("group", groupListener);
     socket.emit("getGroups");
+  }
+
+  useEffect(() => {
+    getUsers();
+    getGroups();
   }, [socket]);
 
   return (
