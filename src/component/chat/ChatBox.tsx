@@ -3,6 +3,7 @@ import { IconButton, TextField as MuiTextField, styled } from "@mui/material";
 import SendIcon from '@mui/icons-material/Send';
 import { useState } from "react";
 import withFooter from "@/hoc/Layout/withFooter";
+import { ChatType } from "@/type/Chat";
 
 const TextField = styled(MuiTextField)({
   '.MuiOutlinedInput-root': {
@@ -17,8 +18,17 @@ const TextField = styled(MuiTextField)({
   },
 });
 
-function ChatBox() {
+type props = {
+  chatType: ChatType,
+  id: string
+}
+
+function ChatBox({ ...props }: props) {
   const [value, setValue] = useState<string>("")
+
+  function sendMessage() {
+    console.log(`Send ${props.chatType} message: ${props.id}`)
+  }
 
   return (
     <TextField
@@ -29,7 +39,7 @@ function ChatBox() {
       sx={{ borderRadius: 8 }}
       InputProps={{
         endAdornment: value.length > 0 && (
-          <IconButton>
+          <IconButton onClick={sendMessage}>
             <SendIcon />
           </IconButton>
         )

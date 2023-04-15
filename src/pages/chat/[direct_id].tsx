@@ -62,7 +62,10 @@ export default function Chat() {
             />
           ))}
       </CenterList>
-      <ChatBox />
+      <ChatBox
+        chatType="Direct"
+        id={chatId}
+      />
     </>
   );
 }

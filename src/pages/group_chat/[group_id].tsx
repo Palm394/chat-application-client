@@ -63,7 +63,10 @@ export default function GroupChat() {
             />
           ))}
       </CenterList>
-      <ChatBox />
+      <ChatBox
+        chatType="Group"
+        id={chatId}
+      />
     </>
   );
 }
