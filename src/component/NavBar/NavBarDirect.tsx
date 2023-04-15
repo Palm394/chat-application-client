@@ -5,18 +5,20 @@ import useMenu from "@/hook/useMenu";
 import MenuNavBar from "./MenuNavBar";
 
 type props = {
-  label?: string
+  label?: string,
+  avatar: string
 }
 
 NavBarDirect.defaultProps = {
   label: "CHAT NAME",
+  avatar: "https://avatars.githubusercontent.com/u/62459518?v=4"
 }
 
 export default function NavBarDirect({ ...props }: props) {
   const menu = useMenu()
   return (
     <NavBarLayout
-      avatar="c"
+      avatar={props.avatar}
       displayComponent={<Typography>{props.label}</Typography>}>
       <>
         <IconButton onClick={menu.handleOpenMenu}>
