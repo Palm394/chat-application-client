@@ -5,10 +5,13 @@ import CenterList from "@/component/chat/CenterList";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { SocketContext } from "@/context/SocketContext";
+import useLocalStorage from "@/hook/useLocalStorage";
+import { User } from "@/type/User";
 
 export default function Chat() {
   const router = useRouter();
   const socket = useContext(SocketContext);
+  const [currentUser, setCurrentUser] = useLocalStorage<User>("user_data");
 
   const chatId = router.query.direct_id?.toString().replaceAll('"', "");
   const [messages, setMessages] = useState<any>({});
@@ -24,7 +27,7 @@ export default function Chat() {
 
     const indentifier = {
       type: "Direct",
-      ownerId: "64339a88ede9b0fc8a482d45",
+      ownerId: currentUser.user_id,
       chatId: chatId,
     };
     socket.on("get_messages_response", (res: any) => console.log(res.message));
