@@ -27,6 +27,10 @@ export default function Message({ ...props }: props) {
   const router = useRouter()
   const modal = useModal()
 
+  function clickEmoji(): void {
+    console.log("Emoji is clicked")
+  }
+
   return (
     <ListItem sx={{
       flexDirection: props.isMine ? "row-reverse" : "initial"
@@ -66,13 +70,23 @@ export default function Message({ ...props }: props) {
             "alignItems": "center",
             "&:hover": {
               ".emoji": {
-                visibility: "visible"
+                visibility: "visible",
+                opacity: "0.5",
+                cursor: "pointer"
               }
             }
           }}
         >
           <BubbleMessage text={props.text} isMine={props.isMine} />
-          <Box margin={`0 ${theme.spacing(2)}`} sx={{ visibility: "hidden" }} className="emoji">&#128077;</Box>
+          <Box
+            onClick={clickEmoji}
+            sx={{
+              visibility: "hidden",
+              margin: `0 ${theme.spacing(2)}`
+            }}
+            className="emoji">
+            &#128077;
+          </Box>
         </Stack>
       </Stack>
     </ListItem>
