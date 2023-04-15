@@ -38,6 +38,7 @@ export default function NavBarIndex({ ...props }: props) {
     }
     function closeEditMode(): void {
         setNewName("")
+        setIsError(false)
         setIsEditMode(false)
     }
     return (
