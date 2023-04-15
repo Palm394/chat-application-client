@@ -7,6 +7,8 @@ import { useContext, useEffect, useState } from "react";
 import { SocketContext } from "@/context/SocketContext";
 import useLocalStorage from "@/hook/useLocalStorage";
 import { User } from "@/type/User";
+import { SOCKET_MESSAGE } from "@/type/Constant";
+import { MessageSocketType, ResType } from "@/type/Socket";
 
 export default function Chat() {
   const router = useRouter();
@@ -14,11 +16,12 @@ export default function Chat() {
   const [currentUser, _] = useLocalStorage<User>("user_data");
 
   const chatId = router.query.direct_id?.toString().replaceAll('"', "");
-  const [messages, setMessages] = useState<any>({});
+  const [user, setUser] = useState<User | null>(null);
+  const [messages, setMessages] = useState<{ [key: string]: MessageSocketType }>({});
 
-  useEffect(() => {
-    const messageListener = (message: any) => {
-      setMessages((prevMessages: any) => {
+  function getMessages() {
+    const messageListener = (message: MessageSocketType) => {
+      setMessages((prevMessages: { [key: string]: MessageSocketType }) => {
         const newMessages = { ...prevMessages };
         newMessages[message._id] = message;
         return newMessages;
@@ -27,45 +30,62 @@ export default function Chat() {
 
     const identifier = {
       type: "Direct",
-      ownerId: currentUser.user_id,
+      ownerId: currentUser.userId,
       chatId: chatId,
     };
-    socket.on("get_messages_response", (res: any) => console.log(res.message));
+    socket.on("get_messages_response", (res: ResType) => console.log(res.message));
     socket.on("message", messageListener);
     socket.emit("getMessages", identifier);
+  }
+
+  function getUserInformation() {
+    const ids = {
+      myUserId: currentUser.userId,
+      chatId: chatId,
+    };
+    socket.on("get_user_by_chat_id_response", (res: ResType) => {
+      console.log(res.message);
+      if (res.message === SOCKET_MESSAGE.SUCCESS) {
+        setUser({
+          username: res.username ? res.username : "",
+          userId: res.userId ? res.userId : "",
+          profileImage: "",
+        });
+      }
+    });
+    socket.emit("getUserByChatId", ids);
+  }
+
+  useEffect(() => {
+    if (chatId) {
+      getMessages();
+      getUserInformation();
+    }
   }, [socket, router]);
 
   return (
     <>
-      <NavBar
-        label={chatId}
-      />
+      <NavBar label={user?.username} />
       <CenterList>
-        <Message
-          text={"TEMP OWN MESSAGE"}
-          isMine={true}
-          type={"Direct"}
-        />
-        <Message
-          text={"TEMP MESSAGE"}
-          isMine={false}
-          type={"Direct"}
-        />
         {[...Object.values(messages)]
-          .sort((a: any, b: any) => a.createdAt - b.createdAt)
-          .map((message: any) => (
+          .sort(
+            (a: MessageSocketType, b: MessageSocketType) =>
+              a.createdAt.valueOf() - b.createdAt.valueOf()
+          )
+          .map((message: MessageSocketType) => (
             <Message
               key={message._id}
               text={message.message}
               isMine={message.isOwner}
+              avatar={message.profileImage}
               type={"Direct"}
+              senderName={message.username}
+              isLiked={message.isLiked}
+              totalLiked={message.like}
             />
           ))}
       </CenterList>
-      <ChatBox
-        chatType="Direct"
-        id={chatId}
-      />
+      <ChatBox chatType="Direct" id={chatId} />
     </>
   );
 }
