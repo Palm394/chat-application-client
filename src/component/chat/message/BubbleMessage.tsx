@@ -1,8 +1,9 @@
-import { Typography, styled } from "@mui/material"
+import { Box, Typography, styled } from "@mui/material"
 
 type props = {
   text: string,
-  isMine: boolean
+  isMine: boolean,
+  totalLike: number
 }
 
 export default function BubbleMessage({ ...props }: props) {
@@ -14,6 +15,19 @@ export default function BubbleMessage({ ...props }: props) {
   `
 
   return (
-    <CSSmessage>{props.text}</CSSmessage>
+    <Box sx={{ position: "relative" }}>
+      {props.totalLike > 0 &&
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: "30px",
+            left: props.isMine ? "-10px" : "auto",
+            right: !props.isMine ? "-10px" : "auto"
+          }}>
+          &#128077; {props.totalLike}
+        </Box>
+      }
+      <CSSmessage>{props.text}</CSSmessage>
+    </Box>
   )
 }

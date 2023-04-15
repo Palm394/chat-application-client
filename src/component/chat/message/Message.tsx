@@ -8,29 +8,30 @@ import BubbleMessage from "./BubbleMessage";
 import { useRouter } from "next/router";
 import useLocalStorage from "@/hook/useLocalStorage";
 import { User } from "@/type/User";
-import { useState } from "react";
 
 type props = {
+  key: string,
   text: string,
   isMine: boolean,
   avatar?: string,
   type: ChatType,
-  senderName?: string
+  senderName?: string,
+  isLiked: boolean,
+  totalLiked: number
 }
 
 Message.defaultProps = {
   senderName: "Sender Name",
-  avatar: "https://avatars.githubusercontent.com/u/63848208?v=4"
+  avatar: "https://avatars.githubusercontent.com/u/63848208?v=4",
 }
 
 export default function Message({ ...props }: props) {
   const [currentUser, _] = useLocalStorage<User>("user_data")
-  const [isLiked, setIsLiked] = useState<boolean>(false)
   const router = useRouter()
   const modal = useModal()
 
   function clickEmoji(): void {
-    setIsLiked(!isLiked)
+    console.log("Emoji is clicked")
   }
 
   return (
@@ -73,20 +74,25 @@ export default function Message({ ...props }: props) {
             "&:hover": {
               ".emoji": {
                 visibility: "visible",
-                opacity: isLiked ? 1 : 0.5,
+                opacity: props.isLiked ? 1 : 0.5,
                 cursor: "pointer"
               }
             }
           }}
         >
-          <BubbleMessage text={props.text} isMine={props.isMine} />
+          <BubbleMessage
+            text={props.text}
+            isMine={props.isMine}
+            totalLike={props.totalLiked}
+          />
           <Box
             onClick={clickEmoji}
             sx={{
               visibility: "hidden",
               margin: `0 ${theme.spacing(2)}`
             }}
-            className="emoji">
+            className="emoji"
+          >
             &#128077;
           </Box>
         </Stack>
