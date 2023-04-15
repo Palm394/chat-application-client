@@ -57,6 +57,7 @@ export default function Home() {
           onClick={collaspeClient.onClick}
         />
         <Collapse in={collaspeClient.open}>
+          <Chat href={`/chat/1`} label={"user.username"} type="Direct" />
           {[...Object.values(users)].map((user: any, index: any) => (
             <Chat key={index} href={`/chat/${user.chat_id}`} label={user.username} type="Direct" />
           ))}
@@ -67,6 +68,7 @@ export default function Home() {
           onClick={collaspeServer.onClick}
         />
         <Collapse in={collaspeServer.open}>
+          <Chat href={`/group_chat/1`} label={"TEMP GROUP"} type="Group" />
           {[...Object.values(groups)].map((group: any, index: any) => (
             <Chat key={index} href={`/group_chat/${group._id}`} label={group.name} type="Group" />
           ))}

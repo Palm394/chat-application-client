@@ -37,7 +37,9 @@ export default function Chat() {
 
   return (
     <>
-      <NavBar />
+      <NavBar
+        label={chatId}
+      />
       <CenterList>
         {[...Object.values(messages)]
           .sort((a: any, b: any) => a.createdAt - b.createdAt)

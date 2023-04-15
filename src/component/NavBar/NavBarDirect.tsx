@@ -4,12 +4,20 @@ import NavBarLayout from "./NavBarLayout";
 import useMenu from "@/hook/useMenu";
 import MenuNavBar from "./MenuNavBar";
 
-export default function NavBarDirect() {
+type props = {
+  label?: string
+}
+
+NavBarDirect.defaultProps = {
+  label: "CHAT NAME",
+}
+
+export default function NavBarDirect({ ...props }: props) {
   const menu = useMenu()
   return (
     <NavBarLayout
       avatar="c"
-      displayComponent={<Typography>{"client1"}</Typography>}>
+      displayComponent={<Typography>{props.label}</Typography>}>
       <>
         <IconButton onClick={menu.handleOpenMenu}>
           <MoreVertIcon />

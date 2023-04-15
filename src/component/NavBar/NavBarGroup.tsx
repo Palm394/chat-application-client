@@ -4,11 +4,19 @@ import NavBarLayout from "./NavBarLayout";
 import useMenu from "@/hook/useMenu";
 import MenuNavBar from "./MenuNavBar";
 
-export default function NavBarGroup() {
+type props = {
+  label?: string
+}
+
+NavBarGroup.defaultProps = {
+  label: "CHAT GROUP NAME",
+}
+
+export default function NavBarGroup({ ...props }: props) {
   const menu = useMenu()
   return (
     <NavBarLayout
-      displayComponent={<Typography>{"group1"}</Typography>}>
+      displayComponent={<Typography>{props.label}</Typography>}>
       <>
         <IconButton onClick={menu.handleOpenMenu}>
           <MoreVertIcon />
