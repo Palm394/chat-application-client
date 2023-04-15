@@ -8,6 +8,7 @@ import BubbleMessage from "./BubbleMessage";
 import { useRouter } from "next/router";
 import useLocalStorage from "@/hook/useLocalStorage";
 import { User } from "@/type/User";
+import { useState } from "react";
 
 type props = {
   text: string,
@@ -23,12 +24,13 @@ Message.defaultProps = {
 }
 
 export default function Message({ ...props }: props) {
-  const [currentUser, setCurrentUser] = useLocalStorage<User>("user_data")
+  const [currentUser, _] = useLocalStorage<User>("user_data")
+  const [isLiked, setIsLiked] = useState<boolean>(false)
   const router = useRouter()
   const modal = useModal()
 
   function clickEmoji(): void {
-    console.log("Emoji is clicked")
+    setIsLiked(!isLiked)
   }
 
   return (
@@ -71,7 +73,7 @@ export default function Message({ ...props }: props) {
             "&:hover": {
               ".emoji": {
                 visibility: "visible",
-                opacity: "0.5",
+                opacity: isLiked ? 1 : 0.5,
                 cursor: "pointer"
               }
             }
