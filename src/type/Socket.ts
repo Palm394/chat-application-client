@@ -1,6 +1,7 @@
 export interface ResType {
   message: string;
   userId?: string;
+  username?: string;
   profileImage?: string;
 }
 
@@ -15,4 +16,16 @@ export type GroupSocketType = {
   _id: string;
   name: string;
   backgroundImage: string;
+};
+
+export type MessageSocketType = {
+  _id: string;
+  message: string;
+  userId: string;
+  username: string;
+  profileImage: string;
+  isOwner: boolean;
+  isLiked: boolean;
+  like: number;
+  createdAt: Date;
 };
