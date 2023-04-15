@@ -2,7 +2,7 @@ import theme from "@/config/theme";
 import { SocketContext } from "@/context/SocketContext";
 import useLocalStorage from "@/hook/useLocalStorage";
 import { SOCKET_MESSAGE } from "@/type/Constant";
-import { LoginResType } from "@/type/Socket";
+import { ResType } from "@/type/Socket";
 import { User } from "@/type/User";
 import { Button, Stack, TextField, Typography } from "@mui/material";
 import { useRouter } from "next/router";
@@ -15,21 +15,21 @@ export default function Login() {
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [response, setResponse] = useState<LoginResType | null>(null);
+  const [response, setResponse] = useState<ResType | null>(null);
 
   // open port to receive response from backend service
-  socket.on("login_response", (res: LoginResType) => {
+  socket.on("login_response", (res: ResType) => {
     setResponse(res);
     console.log(res.message);
   });
 
   useEffect(() => {
-    if (response && response.userId && response.profileImage) {
+    if (response && response.userId) {
       if (response.message === SOCKET_MESSAGE.SUCCESS) {
         setCurrentUser({
           username: username,
           userId: response.userId,
-          profileImage: response.profileImage,
+          profileImage: response.profileImage ? response.profileImage : "",
         });
         socket.off("login_response");
         router.push("/");
