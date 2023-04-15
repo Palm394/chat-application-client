@@ -12,7 +12,7 @@ import { User } from "@/type/User";
 
 export default function Home() {
   const socket = useContext(SocketContext);
-  const [currentUser, setCurrentUser] = useLocalStorage<User>("user_data");
+  const [currentUser, _] = useLocalStorage<User>("user_data");
 
   const collaspeClient = useCollaspe();
   const collaspeServer = useCollaspe();

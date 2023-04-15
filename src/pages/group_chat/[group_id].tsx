@@ -11,7 +11,7 @@ import { User } from "@/type/User";
 export default function GroupChat() {
   const router = useRouter();
   const socket = useContext(SocketContext);
-  const [currentUser, setCurrentUser] = useLocalStorage<User>("user_data");
+  const [currentUser, _] = useLocalStorage<User>("user_data");
 
   const chatId = router.query.group_id?.toString().replaceAll('"', "");
   const [messages, setMessages] = useState<any>({});
@@ -25,15 +25,16 @@ export default function GroupChat() {
       });
     };
 
-    const indentifier = {
+    const identifier = {
       type: "Group",
       ownerId: currentUser.user_id,
       chatId: chatId,
     };
+
     socket.on("get_messages_response", (res: any) => console.log(res.message));
     socket.on("message", messageListener);
-    socket.emit("getMessages", indentifier);
-  }, [socket]);
+    socket.emit("getMessages", identifier);
+  }, [socket, router]);
 
   return (
     <>

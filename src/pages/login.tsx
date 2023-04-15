@@ -11,7 +11,7 @@ import { useContext, useEffect, useState } from "react";
 export default function Login() {
   const router = useRouter();
   const socket = useContext(SocketContext);
-  const [currentUser, setCurrentUser] = useLocalStorage<User>("user_data");
+  const [_, setCurrentUser] = useLocalStorage<User>("user_data");
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
