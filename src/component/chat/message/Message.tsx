@@ -2,7 +2,7 @@ import Dialog from "@/component/common/Dialog";
 import theme from "@/config/theme";
 import useModal from "@/hook/useModal";
 import { ChatType } from "@/type/Chat";
-import { Avatar, Button, ListItem, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Button, ListItem, Stack, Typography } from "@mui/material";
 import MessageIcon from '@mui/icons-material/Message';
 import BubbleMessage from "./BubbleMessage";
 import { useRouter } from "next/router";
@@ -60,7 +60,20 @@ export default function Message({ ...props }: props) {
         {props.type === "Group" && !props.isMine &&
           <Typography sx={{ paddingLeft: theme.spacing(2), paddingBottom: 0 }} variant="body2">{props.senderName}</Typography>
         }
-        <BubbleMessage text={props.text} isMine={props.isMine} />
+        <Stack
+          direction={props.isMine ? "row-reverse" : "row"}
+          sx={{
+            "alignItems": "center",
+            "&:hover": {
+              ".emoji": {
+                visibility: "visible"
+              }
+            }
+          }}
+        >
+          <BubbleMessage text={props.text} isMine={props.isMine} />
+          <Box margin={`0 ${theme.spacing(2)}`} sx={{ visibility: "hidden" }} className="emoji">&#128077;</Box>
+        </Stack>
       </Stack>
     </ListItem>
   )
