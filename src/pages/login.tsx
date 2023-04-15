@@ -24,9 +24,13 @@ export default function Login() {
   });
 
   useEffect(() => {
-    if (response && response.userId) {
+    if (response && response.userId && response.profileImage) {
       if (response.message === SOCKET_MESSAGE.SUCCESS) {
-        setCurrentUser({ username: username, user_id: response.userId });
+        setCurrentUser({
+          username: username,
+          userId: response.userId,
+          profileImage: response.profileImage,
+        });
         socket.off("login_response");
         router.push("/");
         return;
