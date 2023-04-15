@@ -29,6 +29,10 @@ function CreateGroup() {
   }
 
   function handleCreateGroup() {
+    if (newGroupName.length === 0) {
+      setIsError(true)
+      return
+    }
     socket.on("create_group_response", (res: any) => console.log(res.message));
     socket.emit("createGroup", newGroupName);
     modal.onClose();
