@@ -57,7 +57,7 @@ export default function Home() {
           onClick={collaspeClient.onClick}
         />
         <Collapse in={collaspeClient.open}>
-          <Chat href={`/chat/1`} label={"user.username"} type="Direct" />
+          <Chat href={`/chat/1`} label={"TEMP USER"} type="Direct" />
           {[...Object.values(users)].map((user: any, index: any) => (
             <Chat key={index} href={`/chat/${user.chat_id}`} label={user.username} type="Direct" />
           ))}

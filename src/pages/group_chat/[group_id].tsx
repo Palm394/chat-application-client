@@ -42,6 +42,16 @@ export default function GroupChat() {
         label={chatId}
       />
       <CenterList>
+        <Message
+          text={"TEMP OWN MESSAGE"}
+          isMine={true}
+          type={"Group"}
+        />
+        <Message
+          text={"TEMP MESSAGE"}
+          isMine={false}
+          type={"Group"}
+        />
         {[...Object.values(messages)]
           .sort((a: any, b: any) => a.createdAt - b.createdAt)
           .map((message: any) => (

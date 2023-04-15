@@ -41,6 +41,16 @@ export default function Chat() {
         label={chatId}
       />
       <CenterList>
+        <Message
+          text={"TEMP OWN MESSAGE"}
+          isMine={true}
+          type={"Direct"}
+        />
+        <Message
+          text={"TEMP MESSAGE"}
+          isMine={false}
+          type={"Direct"}
+        />
         {[...Object.values(messages)]
           .sort((a: any, b: any) => a.createdAt - b.createdAt)
           .map((message: any) => (
@@ -48,7 +58,7 @@ export default function Chat() {
               key={message._id}
               text={message.message}
               isMine={message.isOwner}
-              type={"Group"}
+              type={"Direct"}
             />
           ))}
       </CenterList>

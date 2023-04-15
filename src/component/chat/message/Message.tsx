@@ -8,7 +8,6 @@ import BubbleMessage from "./BubbleMessage";
 import { useRouter } from "next/router";
 import useLocalStorage from "@/hook/useLocalStorage";
 import { User } from "@/type/User";
-import { useEffect } from "react";
 
 type props = {
   text: string,
@@ -20,6 +19,7 @@ type props = {
 
 Message.defaultProps = {
   senderName: "Sender Name",
+  avatar: "https://avatars.githubusercontent.com/u/63848208?v=4"
 }
 
 export default function Message({ ...props }: props) {
@@ -35,6 +35,7 @@ export default function Message({ ...props }: props) {
         <>
           <Button onClick={modal.onOpen}>
             <Avatar
+              src={props.avatar}
               sx={{
                 margin: props.isMine ?
                   `0 0 0 ${theme.spacing(2)}`
