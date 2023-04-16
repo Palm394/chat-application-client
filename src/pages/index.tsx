@@ -10,8 +10,11 @@ import { SocketContext } from "@/context/SocketContext";
 import useLocalStorage from "@/hook/useLocalStorage";
 import { User } from "@/type/User";
 import { GroupSocketType, ResType, UserSocketType } from "@/type/Socket";
+import { DEFAULT_CURRENT_USER } from "@/type/Constant";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
   const socket = useContext(SocketContext);
   const [currentUser, _] = useLocalStorage<User>("user_data");
 
@@ -27,7 +30,6 @@ export default function Home() {
       setUsers((prevUsers: { [key: string]: UserSocketType }) => {
         const newUsers = { ...prevUsers };
         newUsers[user._id] = user;
-        console.log(user);
         return newUsers;
       });
     };
@@ -51,9 +53,14 @@ export default function Home() {
   }
 
   useEffect(() => {
+    if (JSON.stringify(currentUser) === JSON.stringify(DEFAULT_CURRENT_USER)) {
+      router.push("/login");
+      return;
+    }
+
     getUsers();
     getGroups();
-  }, [socket]);
+  }, [socket, currentUser]);
 
   return (
     <>

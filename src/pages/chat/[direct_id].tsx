@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import { SocketContext } from "@/context/SocketContext";
 import useLocalStorage from "@/hook/useLocalStorage";
 import { User } from "@/type/User";
-import { SOCKET_MESSAGE } from "@/type/Constant";
+import { DEFAULT_CURRENT_USER, SOCKET_MESSAGE } from "@/type/Constant";
 import { MessageSocketType, ResType } from "@/type/Socket";
 
 export default function Chat() {
@@ -57,6 +57,11 @@ export default function Chat() {
   }
 
   useEffect(() => {
+    if (JSON.stringify(currentUser) === JSON.stringify(DEFAULT_CURRENT_USER)) {
+      router.push("/login");
+      return;
+    }
+
     if (chatId) {
       getMessages();
       getUserInformation();

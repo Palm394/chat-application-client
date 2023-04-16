@@ -22,14 +22,17 @@ import useMenu from "@/hook/useMenu";
 import Menu from "@/component/common/Menu";
 import { SocketContext } from "@/context/SocketContext";
 import { ResType } from "@/type/Socket";
+import { DEFAULT_CURRENT_USER } from "@/type/Constant";
+import { useRouter } from "next/router";
 
 type props = {
   avatar?: string;
 };
 
 export default function NavBarIndex({ ...props }: props) {
+  const router = useRouter();
   const socket = useContext(SocketContext);
-  const [currentUser, _] = useLocalStorage<User>("user_data");
+  const [currentUser, setCurrentUser] = useLocalStorage<User>("user_data");
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [newName, setNewName] = useState<string>(currentUser.username);
@@ -57,9 +60,15 @@ export default function NavBarIndex({ ...props }: props) {
 
     closeEditMode();
   }
+
   function onClickLogout() {
     console.log("Logout button is clicked");
+
+    setCurrentUser(DEFAULT_CURRENT_USER);
+    router.push("/login");
+    return;
   }
+
   function handleChangeNewName(
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ): void {
@@ -70,9 +79,11 @@ export default function NavBarIndex({ ...props }: props) {
     }
     setNewName(event.target.value);
   }
+
   function openEditMode(): void {
     setIsEditMode(true);
   }
+
   function closeEditMode(): void {
     setIsError(false);
     setIsEditMode(false);

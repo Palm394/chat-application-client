@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import useLocalStorage from "@/hook/useLocalStorage";
 import { User } from "@/type/User";
 import { GroupSocketType, MessageSocketType, ResType } from "@/type/Socket";
+import { DEFAULT_CURRENT_USER } from "@/type/Constant";
 
 export default function GroupChat() {
   const router = useRouter();
@@ -49,6 +50,11 @@ export default function GroupChat() {
   }
 
   useEffect(() => {
+    if (JSON.stringify(currentUser) === JSON.stringify(DEFAULT_CURRENT_USER)) {
+      router.push("/login");
+      return;
+    }
+
     if (chatId) {
       getMessages();
       getGroupInformation();
