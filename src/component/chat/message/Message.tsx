@@ -3,52 +3,68 @@ import theme from "@/config/theme";
 import useModal from "@/hook/useModal";
 import { ChatType } from "@/type/Chat";
 import { Avatar, Box, Button, ListItem, Stack, Typography } from "@mui/material";
-import MessageIcon from '@mui/icons-material/Message';
+import MessageIcon from "@mui/icons-material/Message";
 import BubbleMessage from "./BubbleMessage";
 import { useRouter } from "next/router";
 import useLocalStorage from "@/hook/useLocalStorage";
 import { User } from "@/type/User";
+import { useContext } from "react";
+import { SocketContext } from "@/context/SocketContext";
+import { ResType } from "@/type/Socket";
 
 type props = {
-  key: string,
-  text: string,
-  isMine: boolean,
-  avatar?: string,
-  type: ChatType,
-  senderName?: string,
-  isLiked: boolean,
-  totalLiked: number
-}
+  key: string;
+  text: string;
+  isMine: boolean;
+  avatar?: string;
+  type: ChatType;
+  senderName?: string;
+  isLiked: boolean;
+  totalLiked: number;
+};
 
 Message.defaultProps = {
   senderName: "Sender Name",
   avatar: "https://avatars.githubusercontent.com/u/63848208?v=4",
-}
+};
 
 export default function Message({ ...props }: props) {
-  const [currentUser, _] = useLocalStorage<User>("user_data")
-  const router = useRouter()
-  const modal = useModal()
+  const socket = useContext(SocketContext);
+  const [currentUser, _] = useLocalStorage<User>("user_data");
+
+  const router = useRouter();
+  const modal = useModal();
+
+  function likeMessage() {
+    const identifier = {
+      ownerId: currentUser.userId,
+      messageId: "643a71f0fc0ee37d3f03968c",
+    };
+
+    socket.on("like_message_response", (res: ResType) => console.log(res.message));
+    socket.emit("likeMessage", identifier);
+  }
 
   function clickEmoji(): void {
-    console.log("Emoji is clicked")
+    console.log("Emoji is clicked");
+    likeMessage();
   }
 
   return (
-    <ListItem sx={{
-      flexDirection: props.isMine ? "row-reverse" : "initial"
-    }}>
-      {props.type === "Group" &&
+    <ListItem
+      sx={{
+        flexDirection: props.isMine ? "row-reverse" : "initial",
+      }}
+    >
+      {props.type === "Group" && (
         <>
           <Button onClick={modal.onOpen}>
             <Avatar
               src={props.avatar}
               sx={{
-                margin: props.isMine ?
-                  `0 0 0 ${theme.spacing(2)}`
-                  :
-                  `0 ${theme.spacing(2)} 0 0`
-              }} />
+                margin: props.isMine ? `0 0 0 ${theme.spacing(2)}` : `0 ${theme.spacing(2)} 0 0`,
+              }}
+            />
           </Button>
           <Dialog
             open={modal.open}
@@ -59,37 +75,46 @@ export default function Message({ ...props }: props) {
                 <Typography>{props.isMine ? currentUser.username : props.senderName}</Typography>
               </>
             }
-            iconAction={!props.isMine ? [[<MessageIcon />, () => { router.push("/chat/1") }]] : null}
+            iconAction={
+              !props.isMine
+                ? [
+                    [
+                      <MessageIcon />,
+                      () => {
+                        router.push("/chat/1");
+                      },
+                    ],
+                  ]
+                : null
+            }
           />
         </>
-      }
+      )}
       <Stack>
-        {props.type === "Group" && !props.isMine &&
-          <Typography sx={{ paddingLeft: theme.spacing(2), paddingBottom: 0 }} variant="body2">{props.senderName}</Typography>
-        }
+        {props.type === "Group" && !props.isMine && (
+          <Typography sx={{ paddingLeft: theme.spacing(2), paddingBottom: 0 }} variant="body2">
+            {props.senderName}
+          </Typography>
+        )}
         <Stack
           direction={props.isMine ? "row-reverse" : "row"}
           sx={{
-            "alignItems": "center",
+            alignItems: "center",
             "&:hover": {
               ".emoji": {
                 visibility: "visible",
                 opacity: props.isLiked ? 1 : 0.5,
-                cursor: "pointer"
-              }
-            }
+                cursor: "pointer",
+              },
+            },
           }}
         >
-          <BubbleMessage
-            text={props.text}
-            isMine={props.isMine}
-            totalLike={props.totalLiked}
-          />
+          <BubbleMessage text={props.text} isMine={props.isMine} totalLike={props.totalLiked} />
           <Box
             onClick={clickEmoji}
             sx={{
               visibility: "hidden",
-              margin: `0 ${theme.spacing(2)}`
+              margin: `0 ${theme.spacing(2)}`,
             }}
             className="emoji"
           >
@@ -98,5 +123,5 @@ export default function Message({ ...props }: props) {
         </Stack>
       </Stack>
     </ListItem>
-  )
+  );
 }
