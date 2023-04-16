@@ -8,6 +8,7 @@ import useModal from "@/hook/useModal";
 import Dialog from "../common/Dialog";
 import withFooter from "@/hoc/Layout/withFooter";
 import { SocketContext } from "@/context/SocketContext";
+import { ResType } from "@/type/Socket";
 
 function CreateGroup() {
   const socket = useContext(SocketContext);
@@ -30,10 +31,10 @@ function CreateGroup() {
 
   function handleCreateGroup() {
     if (newGroupName.length === 0) {
-      setIsError(true)
-      return
+      setIsError(true);
+      return;
     }
-    socket.on("create_group_response", (res: any) => console.log(res.message));
+    socket.on("create_group_response", (res: ResType) => console.log(res.message));
     socket.emit("createGroup", newGroupName);
     modal.onClose();
     setNewGroupName("");
