@@ -15,7 +15,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import CameraAltIcon from "@mui/icons-material/CameraAlt";
 
 import useLocalStorage from "@/hook/useLocalStorage";
 import { User } from "@/type/User";
@@ -39,8 +39,8 @@ export default function NavBarIndex({ ...props }: props) {
   const [newName, setNewName] = useState<string>(currentUser.username);
   const [isError, setIsError] = useState<boolean>(false);
   const [userData, setUserData] = useLocalStorage<User>("user_data");
-  const [image, setImage] = useState<File | null>(null)
-  const [previewImage, setPreviewImage] = useState<string>("")
+  const [image, setImage] = useState<string>(currentUser.profileImage);
+  const [previewImage, setPreviewImage] = useState<string>("");
 
   const menu = useMenu();
 
@@ -49,7 +49,7 @@ export default function NavBarIndex({ ...props }: props) {
     socket.emit("updateMe", {
       myUserId: currentUser.userId,
       username: newName,
-      profileImage: currentUser.profileImage,
+      profileImage: image,
     });
   }
 
@@ -62,16 +62,20 @@ export default function NavBarIndex({ ...props }: props) {
       return;
     }
 
-    setUserData({ ...userData, username: newName });
-
+    setUserData({ ...userData, username: newName, profileImage: image });
     updateMe();
     closeEditMode();
   }
 
   function handleImageChange(event: any): void {
     const tempFile = event.target.files[0];
-    setImage(tempFile)
-    setPreviewImage(URL.createObjectURL(tempFile))
+
+    const reader = new FileReader();
+    reader.readAsDataURL(tempFile);
+    reader.onload = () => {
+      setImage(reader.result as string);
+    };
+    setPreviewImage(URL.createObjectURL(tempFile));
     event.target.value = null;
   }
 
@@ -84,8 +88,8 @@ export default function NavBarIndex({ ...props }: props) {
   }
 
   function clearImageProfile(): void {
-    setImage(null)
-    setPreviewImage("")
+    setImage("");
+    setPreviewImage("");
   }
 
   function handleChangeNewName(
@@ -97,16 +101,17 @@ export default function NavBarIndex({ ...props }: props) {
       setIsError(false);
     }
     setNewName(event.target.value);
+    console.log(currentUser);
   }
 
   function openEditMode(): void {
-    setNewName("")
+    // setNewName("");
     setIsEditMode(true);
   }
 
   function closeEditMode(): void {
     setIsError(false);
-    clearImageProfile()
+    // clearImageProfile();
     setIsEditMode(false);
   }
   return (
@@ -120,18 +125,23 @@ export default function NavBarIndex({ ...props }: props) {
     >
       <Toolbar>
         {/* Profile image */}
-        {isEditMode ?
+        {isEditMode ? (
           <Box sx={{ position: "relative", marginRight: "3vw" }}>
-            <IconButton onClick={clearImageProfile} sx={{ position: "absolute", right: "-10px", zIndex: 1 }}><CloseIcon /></IconButton>
+            <IconButton
+              onClick={clearImageProfile}
+              sx={{ position: "absolute", right: "-10px", zIndex: 1 }}
+            >
+              <CloseIcon />
+            </IconButton>
             <IconButton aria-label="Upload Profile Picture" component="label">
               <input onChange={handleImageChange} hidden accept="image/*" type="file" />
               <CameraAltIcon sx={{ position: "absolute", left: "25px", zIndex: 1 }} />
               <Avatar src={previewImage} sx={{ width: 56, height: 56 }} />
             </IconButton>
           </Box>
-          :
-          <Avatar src={props.avatar} sx={{ width: 56, height: 56, marginRight: "3vw" }} />
-        }
+        ) : (
+          <Avatar src={image} sx={{ width: 56, height: 56, marginRight: "3vw" }} />
+        )}
         {/* Nickname */}
         <Box sx={{ flexGrow: 1 }}>
           {isEditMode ? (

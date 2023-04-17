@@ -74,7 +74,13 @@ export default function Home() {
         <Collapse in={collaspeClient.open}>
           <Chat href={`/chat/1`} label={"TEMP USER"} type="Direct" />
           {[...Object.values(users)].map((user: UserSocketType, index: number) => (
-            <Chat key={index} href={`/chat/${user.chatId}`} label={user.username} type="Direct" />
+            <Chat
+              key={index}
+              href={`/chat/${user.chatId}`}
+              label={user.username}
+              avatar={user.profileImage}
+              type="Direct"
+            />
           ))}
         </Collapse>
         <CollaspeButton

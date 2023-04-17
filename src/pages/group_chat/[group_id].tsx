@@ -75,6 +75,7 @@ export default function GroupChat() {
               key={message._id}
               text={message.message}
               isMine={message.isOwner}
+              avatar={message.profileImage}
               type={"Group"}
               senderName={message.username}
               isLiked={message.isLiked}

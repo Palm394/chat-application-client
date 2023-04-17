@@ -49,7 +49,7 @@ export default function Chat() {
         setUser({
           username: res.username ? res.username : "",
           userId: res.userId ? res.userId : "",
-          profileImage: "",
+          profileImage: res.profileImage ? res.profileImage : "",
         });
       }
     });
