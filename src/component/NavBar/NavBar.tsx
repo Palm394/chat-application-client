@@ -15,6 +15,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import EditIcon from "@mui/icons-material/Edit";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
 import useLocalStorage from "@/hook/useLocalStorage";
 import { User } from "@/type/User";
@@ -98,7 +99,20 @@ export default function NavBarIndex({ ...props }: props) {
       }}
     >
       <Toolbar>
-        <Avatar sx={{ width: 56, height: 56, marginRight: "3vw" }}>{props.avatar}</Avatar>
+        {/* Profile image */}
+        {isEditMode ?
+          <Box sx={{ position: "relative", marginRight: "3vw" }}>
+            <IconButton sx={{ position: "absolute", right: "-10px", zIndex: 1 }}><CloseIcon /></IconButton>
+            <IconButton aria-label="Upload Profile Picture" component="label">
+              <input hidden accept="image/*" type="file" />
+              <CameraAltIcon sx={{ position: "absolute", left: "25px", zIndex: 1 }} />
+              <Avatar src={props.avatar} sx={{ width: 56, height: 56 }} />
+            </IconButton>
+          </Box>
+          :
+          <Avatar src={props.avatar} sx={{ width: 56, height: 56, marginRight: "3vw" }} />
+        }
+        {/* Nickname */}
         <Box sx={{ flexGrow: 1 }}>
           {isEditMode ? (
             <TextField
@@ -115,6 +129,7 @@ export default function NavBarIndex({ ...props }: props) {
             <Typography>{userData.username}</Typography>
           )}
         </Box>
+        {/* Action Icon */}
         {isEditMode ? (
           <Box>
             <IconButton onClick={closeEditMode}>
