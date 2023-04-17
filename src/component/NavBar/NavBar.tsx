@@ -39,6 +39,8 @@ export default function NavBarIndex({ ...props }: props) {
   const [newName, setNewName] = useState<string>(currentUser.username);
   const [isError, setIsError] = useState<boolean>(false);
   const [userData, setUserData] = useLocalStorage<User>("user_data");
+  const [image, setImage] = useState<File | null>(null)
+  const [previewImage, setPreviewImage] = useState<string>("")
 
   const menu = useMenu();
 
@@ -51,15 +53,26 @@ export default function NavBarIndex({ ...props }: props) {
     });
   }
 
-  function changeUsername(): void {
+  // Have 2 things to update
+  // 1. username
+  // 2. image profile - have image (file) and previewImage (string)
+  function changeProfile(): void {
     if (newName.length === 0) {
       setIsError(true);
       return;
     }
-    setUserData({ ...userData, username: newName });
-    updateMe();
 
+    setUserData({ ...userData, username: newName });
+
+    updateMe();
     closeEditMode();
+  }
+
+  function handleImageChange(event: any): void {
+    const tempFile = event.target.files[0];
+    setImage(tempFile)
+    setPreviewImage(URL.createObjectURL(tempFile))
+    event.target.value = null;
   }
 
   function onClickLogout() {
@@ -68,6 +81,11 @@ export default function NavBarIndex({ ...props }: props) {
     setCurrentUser(DEFAULT_CURRENT_USER);
     router.push("/login");
     return;
+  }
+
+  function clearImageProfile(): void {
+    setImage(null)
+    setPreviewImage("")
   }
 
   function handleChangeNewName(
@@ -82,11 +100,13 @@ export default function NavBarIndex({ ...props }: props) {
   }
 
   function openEditMode(): void {
+    setNewName("")
     setIsEditMode(true);
   }
 
   function closeEditMode(): void {
     setIsError(false);
+    clearImageProfile()
     setIsEditMode(false);
   }
   return (
@@ -102,11 +122,11 @@ export default function NavBarIndex({ ...props }: props) {
         {/* Profile image */}
         {isEditMode ?
           <Box sx={{ position: "relative", marginRight: "3vw" }}>
-            <IconButton sx={{ position: "absolute", right: "-10px", zIndex: 1 }}><CloseIcon /></IconButton>
+            <IconButton onClick={clearImageProfile} sx={{ position: "absolute", right: "-10px", zIndex: 1 }}><CloseIcon /></IconButton>
             <IconButton aria-label="Upload Profile Picture" component="label">
-              <input hidden accept="image/*" type="file" />
+              <input onChange={handleImageChange} hidden accept="image/*" type="file" />
               <CameraAltIcon sx={{ position: "absolute", left: "25px", zIndex: 1 }} />
-              <Avatar src={props.avatar} sx={{ width: 56, height: 56 }} />
+              <Avatar src={previewImage} sx={{ width: 56, height: 56 }} />
             </IconButton>
           </Box>
           :
@@ -135,7 +155,7 @@ export default function NavBarIndex({ ...props }: props) {
             <IconButton onClick={closeEditMode}>
               <CloseIcon />
             </IconButton>
-            <IconButton onClick={changeUsername}>
+            <IconButton onClick={changeProfile}>
               <CheckIcon />
             </IconButton>
           </Box>
