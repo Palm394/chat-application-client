@@ -136,7 +136,7 @@ export default function NavBarIndex({ ...props }: props) {
             <IconButton aria-label="Upload Profile Picture" component="label">
               <input onChange={handleImageChange} hidden accept="image/*" type="file" />
               <CameraAltIcon sx={{ position: "absolute", left: "25px", zIndex: 1 }} />
-              <Avatar src={previewImage} sx={{ width: 56, height: 56 }} />
+              <Avatar src={previewImage || image} sx={{ width: 56, height: 56 }} />
             </IconButton>
           </Box>
         ) : (
