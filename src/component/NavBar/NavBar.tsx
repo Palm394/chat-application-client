@@ -23,7 +23,7 @@ import useMenu from "@/hook/useMenu";
 import Menu from "@/component/common/Menu";
 import { SocketContext } from "@/context/SocketContext";
 import { ResType } from "@/type/Socket";
-import { DEFAULT_CURRENT_USER } from "@/type/Constant";
+import { DEFAULT_CURRENT_USER, SOCKET_MESSAGE } from "@/type/Constant";
 import { useRouter } from "next/router";
 
 type props = {
@@ -45,7 +45,13 @@ export default function NavBarIndex({ ...props }: props) {
   const menu = useMenu();
 
   function updateMe() {
-    socket.on("update_user_response", (res: ResType) => console.log(res.message));
+    socket.on("update_user_response", (res: ResType) => {
+      console.log(res.message);
+      if (res.message === SOCKET_MESSAGE.SUCCESS || currentUser.username === newName) {
+        setUserData({ ...userData, username: newName, profileImage: image });
+        closeEditMode();
+      }
+    });
     socket.emit("updateMe", {
       myUserId: currentUser.userId,
       username: newName,
@@ -62,9 +68,7 @@ export default function NavBarIndex({ ...props }: props) {
       return;
     }
 
-    setUserData({ ...userData, username: newName, profileImage: image });
     updateMe();
-    closeEditMode();
   }
 
   function handleImageChange(event: any): void {
@@ -101,7 +105,6 @@ export default function NavBarIndex({ ...props }: props) {
       setIsError(false);
     }
     setNewName(event.target.value);
-    console.log(currentUser);
   }
 
   function openEditMode(): void {
