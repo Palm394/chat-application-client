@@ -40,7 +40,11 @@ export default function Login() {
   }, [socket, response]);
 
   function onSubmit(): void {
-    if (username.length === 0 || password.length === 0 || username.length > 20 || password.length < 6 || password.length >= 20) {
+    if (username.length === 0 ||
+      username.length > 20 ||
+      password.length === 0 ||
+      password.length < 6 ||
+      password.length >= 20) {
       setIsInputError(true)
       return
     }
