@@ -38,7 +38,7 @@ export default function register() {
     // socket : register should start here!
     socket.on("register_response", (res: any) => {
       console.log(res.message);
-      setResponse(res.message);
+      setResponse(res);
     });
     socket.emit("register", { username: username, password: password });
   }
