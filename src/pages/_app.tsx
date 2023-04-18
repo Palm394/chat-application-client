@@ -6,13 +6,13 @@ import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
 
 function App({ Component, pageProps }: AppProps) {
-
   const default_user: User = {
     username: "",
-    user_id: ""
-  }
+    userId: "",
+    profileImage: "",
+  };
   if (!window.localStorage.getItem("user_data")) {
-    window.localStorage.setItem("user_data", JSON.stringify(default_user))
+    window.localStorage.setItem("user_data", JSON.stringify(default_user));
   }
 
   return (
