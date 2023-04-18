@@ -17,8 +17,6 @@ export default function Home() {
   const router = useRouter();
   const socket = useContext(SocketContext);
   const [currentUser, _] = useLocalStorage<User>("user_data");
-  const [usersResponse, setUsersResponse] = useState<ResType>({ message: "" });
-  const [groupsResponse, setGroupsResponse] = useState<ResType>({ message: "" });
 
   const collaspeClient = useCollaspe();
   const collaspeServer = useCollaspe();
@@ -31,9 +29,6 @@ export default function Home() {
       router.push("/login");
       return;
     }
-
-    if (usersResponse.message === SOCKET_MESSAGE.SUCCESS) socket.off("get_users_response");
-    if (groupsResponse.message === SOCKET_MESSAGE.SUCCESS) socket.off("get_groups_response");
 
     getUsers();
     getGroups();
@@ -48,10 +43,9 @@ export default function Home() {
         return newUsers;
       });
     };
-    socket.on("get_users_response", (res: ResType) => {
-      console.log(res.message);
-      setUsersResponse(res);
-    });
+    socket.on("get_users_response", (res: ResType) =>
+      console.log("Get Users Status:", res.message)
+    );
     socket.on("user", userListener);
     socket.emit("getUsers", currentUser.userId);
   }
@@ -65,10 +59,9 @@ export default function Home() {
         return newGroups;
       });
     };
-    socket.on("get_groups_response", (res: ResType) => {
-      console.log(res.message);
-      setGroupsResponse(res);
-    });
+    socket.on("get_groups_response", (res: ResType) =>
+      console.log("Get Groups Status:", res.message)
+    );
     socket.on("group", groupListener);
     socket.emit("getGroups");
   }
