@@ -19,6 +19,18 @@ export default function Chat() {
   const [user, setUser] = useState<User | null>(null);
   const [messages, setMessages] = useState<{ [key: string]: MessageSocketType }>({});
 
+  useEffect(() => {
+    if (JSON.stringify(currentUser) === JSON.stringify(DEFAULT_CURRENT_USER)) {
+      router.push("/login");
+      return;
+    }
+
+    if (chatId) {
+      getMessages();
+      getUserInformation();
+    }
+  }, [socket, currentUser, router]);
+
   function getMessages() {
     const messageListener = (message: MessageSocketType) => {
       setMessages((prevMessages: { [key: string]: MessageSocketType }) => {
@@ -33,7 +45,9 @@ export default function Chat() {
       ownerId: currentUser.userId,
       chatId: chatId,
     };
-    socket.on("get_messages_response", (res: ResType) => console.log(res.message));
+    socket.on("get_messages_response", (res: ResType) =>
+      console.log("Get Messages Status:", res.message)
+    );
     socket.on("message", messageListener);
     socket.emit("getMessages", identifier);
   }
@@ -44,29 +58,18 @@ export default function Chat() {
       chatId: chatId,
     };
     socket.on("get_user_by_chat_id_response", (res: ResType) => {
-      console.log(res.message);
+      console.log("Get User Information", res.message);
       if (res.message === SOCKET_MESSAGE.SUCCESS) {
         setUser({
           username: res.username ? res.username : "",
           userId: res.userId ? res.userId : "",
           profileImage: res.profileImage ? res.profileImage : "",
         });
+        socket.off("get_messages_response");
       }
     });
     socket.emit("getUserByChatId", ids);
   }
-
-  useEffect(() => {
-    if (JSON.stringify(currentUser) === JSON.stringify(DEFAULT_CURRENT_USER)) {
-      router.push("/login");
-      return;
-    }
-
-    if (chatId) {
-      getMessages();
-      getUserInformation();
-    }
-  }, [socket, router]);
 
   return (
     <>
