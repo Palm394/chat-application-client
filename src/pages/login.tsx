@@ -45,7 +45,7 @@ export default function Login() {
       return;
     }
     socket.on("login_response", (res: ResType) => {
-      console.log(res.message);
+      console.log("Login Status:", res.message);
       setResponse(res);
     });
     socket.emit("login", { username: username, password: password });
