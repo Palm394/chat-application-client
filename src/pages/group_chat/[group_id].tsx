@@ -76,6 +76,7 @@ export default function GroupChat() {
           .map((message: MessageSocketType) => (
             <Message
               key={message._id}
+              id={message._id}
               text={message.message}
               isMine={message.isOwner}
               avatar={message.profileImage}

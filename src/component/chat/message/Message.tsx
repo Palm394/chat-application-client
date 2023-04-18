@@ -13,7 +13,7 @@ import { SocketContext } from "@/context/SocketContext";
 import { ResType } from "@/type/Socket";
 
 type props = {
-  key: string;
+  id: string;
   text: string;
   isMine: boolean;
   avatar?: string;
@@ -38,10 +38,12 @@ export default function Message({ ...props }: props) {
   function likeMessage() {
     const identifier = {
       ownerId: currentUser.userId,
-      messageId: "643a71f0fc0ee37d3f03968c",
+      messageId: props.id,
     };
 
-    socket.on("like_message_response", (res: ResType) => console.log(res.message));
+    socket.on("like_message_response", (res: ResType) =>
+      console.log("Toggle Like Message Status:", res.message)
+    );
     socket.emit("likeMessage", identifier);
   }
 
