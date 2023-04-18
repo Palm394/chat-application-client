@@ -53,38 +53,51 @@ export default function Login() {
   }
 
   return (
-    <Stack
-      sx={{
-        margin: "auto",
-      }}
-      spacing={3}
-    >
-      <Typography align="center">Login</Typography>
-      <Stack sx={{ width: "300px" }} spacing={theme.spacing(2)}>
-        <Box sx={{
-          backgroundColor: "white",
-          border: "1px solid #000000",
-          borderRadius: "20px",
-          padding: "40px 20px"
-        }}>
-          <Typography align="center">nickname</Typography>
-          <TextField value={username} onChange={(event) => { setUsername(event.target.value); setIsInputError(false) }}
-            error={isInputError}
-            fullWidth />
-          <Typography align="center">password</Typography>
-          <TextField value={password} type={"password"} onChange={(event) => { setPassword(event.target.value); setIsInputError(false) }}
-            error={isInputError}
-            fullWidth
-          />
-          {isInputError &&
-            <Typography color={"error"} sx={{ marginTop: "30px" }} align="center">wrong nickname or password</Typography>
-          }
-        </Box>
+    <>
+      <Stack
+        sx={{
+          margin: "auto",
+        }}
+        spacing={3}
+      >
+        <Typography align="center">Login</Typography>
+        <Stack sx={{ width: "300px" }} spacing={theme.spacing(2)}>
+          <Box sx={{
+            backgroundColor: "white",
+            border: "1px solid #000000",
+            borderRadius: "20px",
+            padding: "40px 20px"
+          }}>
+            <Typography align="center">nickname</Typography>
+            <TextField value={username} onChange={(event) => { setUsername(event.target.value); setIsInputError(false) }}
+              error={isInputError}
+              fullWidth />
+            <Typography align="center">password</Typography>
+            <TextField value={password} type={"password"} onChange={(event) => { setPassword(event.target.value); setIsInputError(false) }}
+              error={isInputError}
+              fullWidth
+            />
+            {isInputError &&
+              <Typography color={"error"} sx={{ marginTop: "30px" }} align="center">wrong nickname or password</Typography>
+            }
+          </Box>
 
-        <Button onClick={onSubmit} variant="contained">
-          Login
-        </Button>
+          <Button onClick={onSubmit} variant="contained">
+            Login
+          </Button>
+        </Stack>
       </Stack>
-    </Stack>
+      <Button variant="text"
+        onClick={() => router.push("/register")}
+        sx={{
+          color: "black",
+          position: "fixed",
+          bottom: "5vh",
+          left: "50%",
+          transform: "translate(-50%, 0)"
+        }}>
+        Sign Up
+      </Button>
+    </>
   );
 }
