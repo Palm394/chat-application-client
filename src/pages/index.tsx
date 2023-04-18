@@ -10,19 +10,34 @@ import { SocketContext } from "@/context/SocketContext";
 import useLocalStorage from "@/hook/useLocalStorage";
 import { User } from "@/type/User";
 import { GroupSocketType, ResType, UserSocketType } from "@/type/Socket";
-import { DEFAULT_CURRENT_USER } from "@/type/Constant";
+import { DEFAULT_CURRENT_USER, SOCKET_MESSAGE } from "@/type/Constant";
 import { useRouter } from "next/router";
 
 export default function Home() {
   const router = useRouter();
   const socket = useContext(SocketContext);
   const [currentUser, _] = useLocalStorage<User>("user_data");
+  const [usersResponse, setUsersResponse] = useState<ResType>({ message: "" });
+  const [groupsResponse, setGroupsResponse] = useState<ResType>({ message: "" });
 
   const collaspeClient = useCollaspe();
   const collaspeServer = useCollaspe();
 
   const [users, setUsers] = useState<{ [key: string]: UserSocketType }>({});
   const [groups, setGroups] = useState<{ [key: string]: GroupSocketType }>({});
+
+  useEffect(() => {
+    if (JSON.stringify(currentUser) === JSON.stringify(DEFAULT_CURRENT_USER)) {
+      router.push("/login");
+      return;
+    }
+
+    if (usersResponse.message === SOCKET_MESSAGE.SUCCESS) socket.off("get_users_response");
+    if (groupsResponse.message === SOCKET_MESSAGE.SUCCESS) socket.off("get_groups_response");
+
+    getUsers();
+    getGroups();
+  }, [socket, currentUser]);
 
   function getUsers() {
     // retreive users
@@ -33,7 +48,10 @@ export default function Home() {
         return newUsers;
       });
     };
-    socket.on("get_users_response", (res: ResType) => console.log(res.message));
+    socket.on("get_users_response", (res: ResType) => {
+      console.log(res.message);
+      setUsersResponse(res);
+    });
     socket.on("user", userListener);
     socket.emit("getUsers", currentUser.userId);
   }
@@ -47,20 +65,13 @@ export default function Home() {
         return newGroups;
       });
     };
-    socket.on("get_groups_response", (res: ResType) => console.log(res.message));
+    socket.on("get_groups_response", (res: ResType) => {
+      console.log(res.message);
+      setGroupsResponse(res);
+    });
     socket.on("group", groupListener);
     socket.emit("getGroups");
   }
-
-  useEffect(() => {
-    if (JSON.stringify(currentUser) === JSON.stringify(DEFAULT_CURRENT_USER)) {
-      router.push("/login");
-      return;
-    }
-
-    getUsers();
-    getGroups();
-  }, [socket, currentUser]);
 
   return (
     <>
