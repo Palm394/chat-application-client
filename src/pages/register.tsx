@@ -34,9 +34,19 @@ export default function register() {
       setUsernameErrorMsg("nickname cannot be blank")
       return false
     }
+    if (username.length > 20) {
+      setIsInputError([true, isInputError[1]])
+      setUsernameErrorMsg("nickname is too long")
+      return false
+    }
     if (password.length === 0 || confirmPassword.length === 0) {
       setIsInputError([isInputError[0], true])
       setPasswordErrorMsg("password and confirmed cannot be blank")
+      return false
+    }
+    if (password.length > 20) {
+      setIsInputError([isInputError[0], true])
+      setPasswordErrorMsg("password is too long")
       return false
     }
     if (password !== confirmPassword) {
@@ -90,6 +100,17 @@ export default function register() {
           Sign up
         </Button>
       </Stack>
+      <Button variant="text"
+        onClick={() => router.push("/login")}
+        sx={{
+          color: "black",
+          position: "fixed",
+          bottom: "5vh",
+          left: "50%",
+          transform: "translate(-50%, 0)"
+        }}>
+        Log in
+      </Button>
     </Stack>
   )
 }
