@@ -22,6 +22,7 @@ export default function Login() {
   socket.on("login_response", (res: ResType) => {
     setResponse(res);
     console.log(res.message);
+    setIsInputError(true)
   });
 
   useEffect(() => {
@@ -43,7 +44,6 @@ export default function Login() {
     if (username.length === 0 ||
       username.length > 20 ||
       password.length === 0 ||
-      password.length < 6 ||
       password.length >= 20) {
       setIsInputError(true)
       return
