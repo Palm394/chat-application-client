@@ -18,6 +18,7 @@ export default function Chat() {
   const chatId = router.query.direct_id?.toString().replaceAll('"', "");
   const [user, setUser] = useState<User | null>(null);
   const [messages, setMessages] = useState<{ [key: string]: MessageSocketType }>({});
+  const [backgroundImage, setBackgroundImage] = useState<string>("");
 
   useEffect(() => {
     if (JSON.stringify(currentUser) === JSON.stringify(DEFAULT_CURRENT_USER)) {
@@ -27,7 +28,7 @@ export default function Chat() {
 
     if (chatId) {
       getMessages();
-      getUserInformation();
+      getDirectInformation();
     }
   }, [socket, currentUser, router]);
 
@@ -52,31 +53,29 @@ export default function Chat() {
     socket.emit("getMessages", identifier);
   }
 
-  function getUserInformation() {
+  function getDirectInformation() {
     const ids = {
       myUserId: currentUser.userId,
       chatId: chatId,
     };
-    socket.on("get_user_by_chat_id_response", (res: ResType) => {
-      console.log("Get User Information", res.message);
+    socket.on("get_direct_by_chat_id_response", (res: ResType) => {
+      console.log("Get Direct Information", res.message);
       if (res.message === SOCKET_MESSAGE.SUCCESS) {
         setUser({
           username: res.username ? res.username : "",
           userId: res.userId ? res.userId : "",
           profileImage: res.profileImage ? res.profileImage : "",
         });
+        setBackgroundImage(res.backgroundImage ? res.backgroundImage : "");
         socket.off("get_messages_response");
       }
     });
-    socket.emit("getUserByChatId", ids);
+    socket.emit("getDirectByChatId", ids);
   }
 
   return (
     <>
-      <NavBar
-        label={user?.username}
-        chatId={chatId}
-      />
+      <NavBar label={user?.username} chatId={chatId} />
       <CenterList>
         {[...Object.values(messages)]
           .sort(

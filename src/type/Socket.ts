@@ -3,6 +3,7 @@ export interface ResType {
   userId?: string;
   username?: string;
   profileImage?: string;
+  backgroundImage?: string;
 }
 
 export type UserSocketType = {

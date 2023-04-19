@@ -18,6 +18,7 @@ export default function GroupChat() {
   const chatId = router.query.group_id?.toString().replaceAll('"', "");
   const [messages, setMessages] = useState<{ [key: string]: MessageSocketType }>({});
   const [groupName, setGroupName] = useState<string>("");
+  const [backgroundImage, setBackgroundImage] = useState<string>("");
 
   useEffect(() => {
     if (JSON.stringify(currentUser) === JSON.stringify(DEFAULT_CURRENT_USER)) {
@@ -55,6 +56,7 @@ export default function GroupChat() {
   function getGroupInformation() {
     const groupListener = (group: GroupSocketType) => {
       setGroupName(group.name);
+      setBackgroundImage(group.backgroundImage);
     };
 
     socket.on("group", groupListener);
@@ -66,10 +68,7 @@ export default function GroupChat() {
 
   return (
     <>
-      <NavBar
-        label={groupName}
-        chatId={chatId}
-      />
+      <NavBar label={groupName} chatId={chatId} />
       <CenterList>
         {[...Object.values(messages)]
           .sort(

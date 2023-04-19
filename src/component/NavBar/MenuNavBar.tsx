@@ -30,9 +30,9 @@ export default function MenuChat({ ...props }: props) {
 
   function updateBackground() {
     const updateInfo = {
-      type: "Group",
-      chatId: "64306c56162f6bf308503bd2",
-      backgroundImage: "",
+      type: props.type,
+      chatId: props.chatId,
+      backgroundImage: image,
     };
 
     socket.on("update_background_response", (res: any) => console.log(res.message));
@@ -68,25 +68,46 @@ export default function MenuChat({ ...props }: props) {
         onClose={modal.onClose}
         header={"choose background image"}
         content={
-          <Box sx={{ position: "relative", marginRight: "auto", backgroundColor: "grey", borderRadius: "20px" }}>
+          <Box
+            sx={{
+              position: "relative",
+              marginRight: "auto",
+              backgroundColor: "grey",
+              borderRadius: "20px",
+            }}
+          >
             <IconButton aria-label="Upload Profile Picture" component="label">
               <input onChange={handleImageChange} hidden accept="image/*" type="file" />
-              <CameraAltIcon sx={{
-                position: "fixed", left: "50%",
-                transform: "translate(-50%, 0)", zIndex: 1
-              }} />
-              <img src={previewImage || image}
-                style={{ width: "100%", minHeight: "300px" }}
+              <CameraAltIcon
+                sx={{
+                  position: "fixed",
+                  left: "50%",
+                  transform: "translate(-50%, 0)",
+                  zIndex: 1,
+                }}
               />
+              <img src={previewImage || image} style={{ width: "100%", minHeight: "300px" }} />
             </IconButton>
           </Box>
         }
         iconAction={[
-          [<CloseIcon />, () => { clearBackgroundImage(); modal.onClose() }],
+          [
+            <CloseIcon />,
+            () => {
+              clearBackgroundImage();
+              modal.onClose();
+            },
+          ],
 
           // upload image to socket
           // updateBackground
-          [<CheckIcon />, () => { }],
+          [
+            <CheckIcon />,
+            () => {
+              updateBackground();
+              modal.onClose();
+            },
+          ],
         ]}
       />
     </Menu>
