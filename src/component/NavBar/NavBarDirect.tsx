@@ -6,12 +6,14 @@ import MenuNavBar from "./MenuNavBar";
 
 type props = {
   label?: string,
-  avatar: string
+  avatar: string,
+  chatId: string
 }
 
 NavBarDirect.defaultProps = {
   label: "CHAT NAME",
-  avatar: "https://avatars.githubusercontent.com/u/62459518?v=4"
+  avatar: "https://avatars.githubusercontent.com/u/62459518?v=4",
+  chatId: "SHOULD HAVE CHAT ID"
 }
 
 export default function NavBarDirect({ ...props }: props) {
@@ -27,6 +29,8 @@ export default function NavBarDirect({ ...props }: props) {
         <MenuNavBar
           open={menu.openMenu}
           onClose={menu.handleCloseMenu}
+          chatId={props.chatId}
+          type={"Direct"}
         />
       </>
     </NavBarLayout>

@@ -11,10 +11,13 @@ import { useContext, useState } from "react";
 import { SocketContext } from "@/context/SocketContext";
 import useLocalStorage from "@/hook/useLocalStorage";
 import { User } from "@/type/User";
+import { ChatType } from "@/type/Chat";
 
 type props = {
   open: boolean;
   onClose: () => void;
+  chatId: string;
+  type: ChatType;
 };
 
 export default function MenuChat({ ...props }: props) {

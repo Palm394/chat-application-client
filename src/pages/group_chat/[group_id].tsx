@@ -66,7 +66,10 @@ export default function GroupChat() {
 
   return (
     <>
-      <NavBar label={groupName} />
+      <NavBar
+        label={groupName}
+        chatId={chatId}
+      />
       <CenterList>
         {[...Object.values(messages)]
           .sort(

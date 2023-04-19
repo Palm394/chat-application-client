@@ -5,11 +5,13 @@ import useMenu from "@/hook/useMenu";
 import MenuNavBar from "./MenuNavBar";
 
 type props = {
-  label?: string
+  label?: string,
+  chatId: string
 }
 
 NavBarGroup.defaultProps = {
   label: "CHAT GROUP NAME",
+  chatId: "SHOULD HAVE CHAT_ID"
 }
 
 export default function NavBarGroup({ ...props }: props) {
@@ -24,6 +26,8 @@ export default function NavBarGroup({ ...props }: props) {
         <MenuNavBar
           open={menu.openMenu}
           onClose={menu.handleCloseMenu}
+          chatId={props.chatId}
+          type={"Group"}
         />
       </>
     </NavBarLayout>

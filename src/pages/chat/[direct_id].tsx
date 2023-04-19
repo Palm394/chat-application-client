@@ -73,7 +73,10 @@ export default function Chat() {
 
   return (
     <>
-      <NavBar label={user?.username} />
+      <NavBar
+        label={user?.username}
+        chatId={chatId}
+      />
       <CenterList>
         {[...Object.values(messages)]
           .sort(
