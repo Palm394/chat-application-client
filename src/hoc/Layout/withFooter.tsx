@@ -5,7 +5,7 @@ import { ComponentType } from "react";
 export default function withFooter<T>(WrapperComponent: ComponentType<T>) {
   const withFooter = (props: any) => {
     return (
-      <Box position={"sticky"}
+      <Box position={"relative"}
         sx={{
           width: "100%",
           backgroundColor: theme.palette.primary.main,
