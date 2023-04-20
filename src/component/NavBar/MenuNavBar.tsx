@@ -35,7 +35,9 @@ export default function MenuChat({ ...props }: props) {
       backgroundImage: image,
     };
 
-    socket.on("update_background_response", (res: any) => console.log(res.message));
+    socket.on("update_background_response", (res: any) =>
+      console.log("Update Background Image Status:", res.message)
+    );
     socket.emit("updateBackground", updateInfo);
   }
 

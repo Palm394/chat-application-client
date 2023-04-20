@@ -44,7 +44,7 @@ export default function Message({ ...props }: props) {
     };
 
     socket.on("get_direct_by_user_id_response", (res: any) => {
-      console.log(res.message);
+      console.log("Get The User Information Status:", res.message);
       setUserChatId(res.chatId);
     });
     socket.emit("getDirectByUserId", ids);

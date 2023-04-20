@@ -46,7 +46,7 @@ export default function NavBarIndex({ ...props }: props) {
 
   function updateMe() {
     socket.on("update_user_response", (res: ResType) => {
-      console.log(res.message);
+      console.log("Update User Information Status:", res.message);
       if (res.message === SOCKET_MESSAGE.SUCCESS) {
         if (currentUser.username === newName) {
           setUserData({ ...userData, profileImage: image });

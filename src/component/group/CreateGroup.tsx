@@ -34,7 +34,9 @@ function CreateGroup() {
       setIsError(true);
       return;
     }
-    socket.on("create_group_response", (res: ResType) => console.log(res.message));
+    socket.on("create_group_response", (res: ResType) =>
+      console.log("Create Group Status:", res.message)
+    );
     socket.emit("createGroup", newGroupName);
     modal.onClose();
     setNewGroupName("");
