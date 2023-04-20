@@ -9,6 +9,7 @@ import useLocalStorage from "@/hook/useLocalStorage";
 import { User } from "@/type/User";
 import { GroupSocketType, MessageSocketType, ResType } from "@/type/Socket";
 import { DEFAULT_CURRENT_USER, SOCKET_MESSAGE } from "@/type/Constant";
+import { Box } from "@mui/material";
 
 export default function GroupChat() {
   const router = useRouter();
@@ -70,25 +71,27 @@ export default function GroupChat() {
     <>
       <NavBar label={groupName} chatId={chatId} />
       <CenterList>
-        {[...Object.values(messages)]
-          .sort(
-            (a: MessageSocketType, b: MessageSocketType) =>
-              a.createdAt.valueOf() - b.createdAt.valueOf()
-          )
-          .map((message: MessageSocketType) => (
-            <Message
-              key={message._id}
-              id={message._id}
-              userId={message.userId}
-              text={message.message}
-              isMine={message.isOwner}
-              avatar={message.profileImage}
-              type={"Group"}
-              senderName={message.username}
-              isLiked={message.isLiked}
-              totalLiked={message.like}
-            />
-          ))}
+        <Box sx={{ backgroundImage: `url(${backgroundImage})`, height: "80vh", paddingTop: "5px" }}>
+          {[...Object.values(messages)]
+            .sort(
+              (a: MessageSocketType, b: MessageSocketType) =>
+                a.createdAt.valueOf() - b.createdAt.valueOf()
+            )
+            .map((message: MessageSocketType) => (
+              <Message
+                key={message._id}
+                id={message._id}
+                userId={message.userId}
+                text={message.message}
+                isMine={message.isOwner}
+                avatar={message.profileImage}
+                type={"Group"}
+                senderName={message.username}
+                isLiked={message.isLiked}
+                totalLiked={message.like}
+              />
+            ))}
+        </Box>
       </CenterList>
       <ChatBox chatType="Group" id={chatId} />
     </>

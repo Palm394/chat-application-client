@@ -9,8 +9,6 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 
 import { useContext, useState } from "react";
 import { SocketContext } from "@/context/SocketContext";
-import useLocalStorage from "@/hook/useLocalStorage";
-import { User } from "@/type/User";
 import { ChatType } from "@/type/Chat";
 
 type props = {
@@ -21,9 +19,8 @@ type props = {
 };
 
 export default function MenuChat({ ...props }: props) {
-  const [currentUser, _] = useLocalStorage<User>("user_data");
   const socket = useContext(SocketContext);
-  const [image, setImage] = useState<string>(currentUser.profileImage);
+  const [image, setImage] = useState<string>("");
   const [previewImage, setPreviewImage] = useState<string>("");
 
   const modal = useModal();

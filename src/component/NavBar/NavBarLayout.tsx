@@ -12,7 +12,6 @@ export default function ProfileLayout({ ...props }: props) {
       position="sticky"
       sx={{
         borderBottom: "2px solid #000000",
-        marginBottom: "5px"
       }}>
       <Toolbar>
         {props.avatar &&
