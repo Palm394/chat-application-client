@@ -47,8 +47,13 @@ export default function NavBarIndex({ ...props }: props) {
   function updateMe() {
     socket.on("update_user_response", (res: ResType) => {
       console.log(res.message);
-      if (res.message === SOCKET_MESSAGE.SUCCESS || currentUser.username === newName) {
-        setUserData({ ...userData, username: newName, profileImage: image });
+      if (res.message === SOCKET_MESSAGE.SUCCESS) {
+        if (currentUser.username === newName) {
+          setUserData({ ...userData, profileImage: image });
+        } else {
+          setUserData({ ...userData, username: newName, profileImage: image });
+        }
+
         closeEditMode();
       }
     });
