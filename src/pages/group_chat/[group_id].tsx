@@ -79,6 +79,7 @@ export default function GroupChat() {
             <Message
               key={message._id}
               id={message._id}
+              userId={message.userId}
               text={message.message}
               isMine={message.isOwner}
               avatar={message.profileImage}

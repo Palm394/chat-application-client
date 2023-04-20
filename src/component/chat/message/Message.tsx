@@ -8,12 +8,13 @@ import BubbleMessage from "./BubbleMessage";
 import { useRouter } from "next/router";
 import useLocalStorage from "@/hook/useLocalStorage";
 import { User } from "@/type/User";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SocketContext } from "@/context/SocketContext";
 import { ResType } from "@/type/Socket";
 
 type props = {
   id: string;
+  userId: string;
   text: string;
   isMine: boolean;
   avatar?: string;
@@ -31,9 +32,23 @@ Message.defaultProps = {
 export default function Message({ ...props }: props) {
   const socket = useContext(SocketContext);
   const [currentUser, _] = useLocalStorage<User>("user_data");
+  const [userChatId, setUserChatId] = useState<string>("");
 
   const router = useRouter();
   const modal = useModal();
+
+  function inspectUser() {
+    const ids = {
+      myUserId: currentUser.userId,
+      userId: props.userId,
+    };
+
+    socket.on("get_direct_by_user_id_response", (res: any) => {
+      console.log(res.message);
+      setUserChatId(res.chatId);
+    });
+    socket.emit("getDirectByUserId", ids);
+  }
 
   function likeMessage() {
     const identifier = {
@@ -60,7 +75,12 @@ export default function Message({ ...props }: props) {
     >
       {props.type === "Group" && (
         <>
-          <Button onClick={modal.onOpen}>
+          <Button
+            onClick={() => {
+              inspectUser();
+              modal.onOpen();
+            }}
+          >
             <Avatar
               src={props.avatar}
               sx={{
@@ -73,7 +93,7 @@ export default function Message({ ...props }: props) {
             onClose={modal.onClose}
             content={
               <>
-                <Avatar sx={{ margin: "15px auto", width: 56, height: 56 }} />
+                <Avatar src={props.avatar} sx={{ margin: "15px auto", width: 56, height: 56 }} />
                 <Typography>{props.isMine ? currentUser.username : props.senderName}</Typography>
               </>
             }
@@ -83,7 +103,7 @@ export default function Message({ ...props }: props) {
                     [
                       <MessageIcon />,
                       () => {
-                        router.push("/chat/1");
+                        router.push(`/chat/${userChatId}`);
                       },
                     ],
                   ]

@@ -75,7 +75,7 @@ export default function Chat() {
 
   return (
     <>
-      <NavBar label={user?.username} chatId={chatId} />
+      <NavBar avatar={user?.profileImage} label={user?.username} chatId={chatId} />
       <CenterList>
         {[...Object.values(messages)]
           .sort(
@@ -86,6 +86,7 @@ export default function Chat() {
             <Message
               key={message._id}
               id={message._id}
+              userId={message.userId}
               text={message.message}
               isMine={message.isOwner}
               avatar={message.profileImage}
