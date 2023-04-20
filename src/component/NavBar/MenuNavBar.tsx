@@ -10,6 +10,8 @@ import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import { useContext, useState } from "react";
 import { SocketContext } from "@/context/SocketContext";
 import { ChatType } from "@/type/Chat";
+import { SOCKET_MESSAGE } from "@/type/Constant";
+import { useRouter } from "next/router";
 
 type props = {
   open: boolean;
@@ -19,6 +21,7 @@ type props = {
 };
 
 export default function MenuChat({ ...props }: props) {
+  const router = useRouter();
   const socket = useContext(SocketContext);
   const [image, setImage] = useState<string>("");
   const [previewImage, setPreviewImage] = useState<string>("");
@@ -32,9 +35,13 @@ export default function MenuChat({ ...props }: props) {
       backgroundImage: image,
     };
 
-    socket.on("update_background_response", (res: any) =>
-      console.log("Update Background Image Status:", res.message)
-    );
+    socket.on("update_background_response", (res: any) => {
+      console.log("Update Background Image Status:", res.message);
+      if (res.message === SOCKET_MESSAGE.SUCCESS) {
+        router.reload();
+        return;
+      }
+    });
     socket.emit("updateBackground", updateInfo);
   }
 
