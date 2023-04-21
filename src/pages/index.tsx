@@ -84,6 +84,7 @@ export default function Home() {
         <Collapse in={collaspeClient.open}>
           {/* <Chat href={`/chat/1`} label={"TEMP USER"} type="Direct" /> */}
           {[...Object.values(users)].map((user: UserSocketType, index: number) => (
+            user.username !== currentUser.username &&
             <Chat
               key={index}
               href={`/chat/${user.chatId}`}
