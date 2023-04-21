@@ -15,6 +15,7 @@ function CreateGroup() {
 
   const [newGroupName, setNewGroupName] = useState<string>("");
   const [isError, setIsError] = useState<boolean>(false);
+  const [errMsg, setErrMsg] = useState<string>("")
 
   const modal = useModal();
 
@@ -32,14 +33,21 @@ function CreateGroup() {
   function handleCreateGroup() {
     if (newGroupName.length === 0) {
       setIsError(true);
+      setErrMsg("group name cannot be blank")
       return;
     }
-    socket.on("create_group_response", (res: ResType) =>
+    socket.on("create_group_response", (res: ResType) => {
       console.log("Create Group Status:", res.message)
+      if (res.message === "GroupName already in use") {
+        setErrMsg(res.message)
+        setIsError(true)
+        return;
+      }
+      setNewGroupName("");
+      modal.onClose();
+    }
     );
     socket.emit("createGroup", newGroupName);
-    modal.onClose();
-    setNewGroupName("");
   }
 
   return (
@@ -71,7 +79,7 @@ function CreateGroup() {
           <TextField
             onChange={handleChangeNewGroupName}
             inputProps={{ maxLength: 20 }}
-            helperText={!isError ? `${newGroupName.length}/20` : "group name cannot be blank"}
+            helperText={!isError ? `${newGroupName.length}/20` : errMsg}
             error={isError}
             autoFocus
           />
