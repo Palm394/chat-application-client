@@ -37,7 +37,7 @@ export default function Home() {
   function getUsers() {
     // retreive users
     const userListener = (user: UserSocketType) => {
-      if (user._id != currentUser.userId) {
+      if (user.myUserId === currentUser.userId) {
         setUsers((prevUsers: { [key: string]: UserSocketType }) => {
           const newUsers = { ...prevUsers };
           newUsers[user._id] = user;

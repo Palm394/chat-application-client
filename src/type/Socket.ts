@@ -8,6 +8,7 @@ export interface ResType {
 
 export type UserSocketType = {
   _id: string;
+  myUserId: string;
   username: string;
   profileImage: string;
   chatId: string;
