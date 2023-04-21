@@ -73,7 +73,7 @@ export default function GroupChat() {
     <>
       <NavBar label={groupName} chatId={chatId} />
       <CenterList>
-        <Box sx={{ backgroundImage: `url(${backgroundImage})`, height: "80vh", paddingTop: "5px" }}>
+        <Box sx={{ backgroundImage: `url(${backgroundImage})`, height: "max-content", minHeight: "80vh", paddingTop: "10px" }}>
           {[...Object.values(messages)]
             .sort(
               (a: MessageSocketType, b: MessageSocketType) =>
