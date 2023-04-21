@@ -33,6 +33,7 @@ export default function Message({ ...props }: props) {
   const socket = useContext(SocketContext);
   const [currentUser, _] = useLocalStorage<User>("user_data");
   const [userChatId, setUserChatId] = useState<string>("");
+  const isOwner = props.userId === currentUser.userId
 
   const router = useRouter();
   const modal = useModal();
@@ -70,7 +71,7 @@ export default function Message({ ...props }: props) {
   return (
     <ListItem
       sx={{
-        flexDirection: props.isMine ? "row-reverse" : "initial",
+        flexDirection: isOwner ? "row-reverse" : "initial",
       }}
     >
       {props.type === "Group" && (
@@ -84,7 +85,7 @@ export default function Message({ ...props }: props) {
             <Avatar
               src={props.avatar}
               sx={{
-                margin: props.isMine ? `0 0 0 ${theme.spacing(2)}` : `0 ${theme.spacing(2)} 0 0`,
+                margin: isOwner ? `0 0 0 ${theme.spacing(2)}` : `0 ${theme.spacing(2)} 0 0`,
               }}
             />
           </Button>
@@ -94,32 +95,32 @@ export default function Message({ ...props }: props) {
             content={
               <>
                 <Avatar src={props.avatar} sx={{ margin: "15px auto", width: 56, height: 56 }} />
-                <Typography>{props.isMine ? currentUser.username : props.senderName}</Typography>
+                <Typography>{isOwner ? currentUser.username : props.senderName}</Typography>
               </>
             }
             iconAction={
-              !props.isMine
+              !isOwner
                 ? [
-                    [
-                      <MessageIcon />,
-                      () => {
-                        router.push(`/chat/${userChatId}`);
-                      },
-                    ],
-                  ]
+                  [
+                    <MessageIcon />,
+                    () => {
+                      router.push(`/chat/${userChatId}`);
+                    },
+                  ],
+                ]
                 : null
             }
           />
         </>
       )}
       <Stack>
-        {props.type === "Group" && !props.isMine && (
+        {props.type === "Group" && !isOwner && (
           <Typography sx={{ paddingLeft: theme.spacing(2), paddingBottom: 0 }} variant="body2">
             {props.senderName}
           </Typography>
         )}
         <Stack
-          direction={props.isMine ? "row-reverse" : "row"}
+          direction={isOwner ? "row-reverse" : "row"}
           sx={{
             alignItems: "center",
             "&:hover": {
@@ -131,7 +132,7 @@ export default function Message({ ...props }: props) {
             },
           }}
         >
-          <BubbleMessage text={props.text} isMine={props.isMine} totalLike={props.totalLiked} />
+          <BubbleMessage text={props.text} isMine={isOwner} totalLike={props.totalLiked} />
           <Box
             onClick={clickEmoji}
             sx={{
