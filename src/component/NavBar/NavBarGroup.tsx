@@ -10,7 +10,7 @@ type props = {
 }
 
 NavBarGroup.defaultProps = {
-  label: "CHAT GROUP NAME",
+  label: "Loading...",
   chatId: "SHOULD HAVE CHAT_ID"
 }
 

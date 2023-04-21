@@ -12,6 +12,7 @@ import { User } from "@/type/User";
 import { GroupSocketType, ResType, UserSocketType } from "@/type/Socket";
 import { DEFAULT_CURRENT_USER, SOCKET_MESSAGE } from "@/type/Constant";
 import { useRouter } from "next/router";
+import Loading from "@/component/common/Loading";
 
 export default function Home() {
   const router = useRouter();
@@ -29,7 +30,6 @@ export default function Home() {
       router.push("/login");
       return;
     }
-
     getUsers();
     getGroups();
   }, [socket, currentUser]);
@@ -64,6 +64,12 @@ export default function Home() {
     );
     socket.on("group", groupListener);
     socket.emit("getGroups");
+  }
+
+  if (!socket.connected) {
+    return (
+      <Loading />
+    )
   }
 
   return (
