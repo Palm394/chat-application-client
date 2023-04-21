@@ -55,6 +55,8 @@ export default function NavBarIndex({ ...props }: props) {
         }
 
         closeEditMode();
+      } else if (res.message === "Username already in use") {
+        setIsError(true)
       }
     });
     socket.emit("updateMe", {
@@ -113,7 +115,7 @@ export default function NavBarIndex({ ...props }: props) {
   }
 
   function openEditMode(): void {
-    // setNewName("");
+    setNewName(userData.username)
     setIsEditMode(true);
   }
 
@@ -157,7 +159,7 @@ export default function NavBarIndex({ ...props }: props) {
               onChange={handleChangeNewName}
               value={newName}
               inputProps={{ maxLength: 20 }}
-              helperText={!isError ? `${newName.length}/20` : "nickname cannot be blank"}
+              helperText={!isError ? `${newName.length}/20` : (newName.length === 0 ? "nickname cannot be blank" : "Username already in use")}
               error={isError}
               autoFocus
               size="small"
