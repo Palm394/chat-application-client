@@ -83,15 +83,17 @@ export default function Home() {
         />
         <Collapse in={collaspeClient.open}>
           {/* <Chat href={`/chat/1`} label={"TEMP USER"} type="Direct" /> */}
-          {[...Object.values(users)].map((user: UserSocketType, index: number) => (
-            <Chat
-              key={index}
-              href={`/chat/${user.chatId}`}
-              label={user.username}
-              avatar={user.profileImage}
-              type="Direct"
-            />
-          ))}
+          {[...Object.values(users)]
+            .sort((a: UserSocketType, b: UserSocketType) => a.username.localeCompare(b.username))
+            .map((user: UserSocketType, index: number) => (
+              <Chat
+                key={index}
+                href={`/chat/${user.chatId}`}
+                label={user.username}
+                avatar={user.profileImage}
+                type="Direct"
+              />
+            ))}
         </Collapse>
         <CollaspeButton
           name={"Group"}
@@ -100,9 +102,11 @@ export default function Home() {
         />
         <Collapse in={collaspeServer.open}>
           {/* <Chat href={`/group_chat/1`} label={"TEMP GROUP"} type="Group" /> */}
-          {[...Object.values(groups)].map((group: GroupSocketType, index: number) => (
-            <Chat key={index} href={`/group_chat/${group._id}`} label={group.name} type="Group" />
-          ))}
+          {[...Object.values(groups)]
+            .sort((a: GroupSocketType, b: GroupSocketType) => a.name.localeCompare(b.name))
+            .map((group: GroupSocketType, index: number) => (
+              <Chat key={index} href={`/group_chat/${group._id}`} label={group.name} type="Group" />
+            ))}
         </Collapse>
       </CenterList>
       <CreateGroup />
