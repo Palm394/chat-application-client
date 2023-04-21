@@ -29,4 +29,5 @@ export type MessageSocketType = {
   isLiked: boolean;
   like: number;
   createdAt: Date;
+  chatId: string;
 };

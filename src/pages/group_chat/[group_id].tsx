@@ -78,6 +78,7 @@ export default function GroupChat() {
                 a.createdAt.valueOf() - b.createdAt.valueOf()
             )
             .map((message: MessageSocketType) => (
+              message.chatId === chatId &&
               <Message
                 key={message._id}
                 id={message._id}
