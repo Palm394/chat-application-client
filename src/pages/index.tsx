@@ -37,11 +37,13 @@ export default function Home() {
   function getUsers() {
     // retreive users
     const userListener = (user: UserSocketType) => {
-      setUsers((prevUsers: { [key: string]: UserSocketType }) => {
-        const newUsers = { ...prevUsers };
-        newUsers[user._id] = user;
-        return newUsers;
-      });
+      if (user._id != currentUser.userId) {
+        setUsers((prevUsers: { [key: string]: UserSocketType }) => {
+          const newUsers = { ...prevUsers };
+          newUsers[user._id] = user;
+          return newUsers;
+        });
+      }
     };
     socket.on("get_users_response", (res: ResType) =>
       console.log("Get Users Status:", res.message)
@@ -67,9 +69,7 @@ export default function Home() {
   }
 
   if (!socket.connected) {
-    return (
-      <Loading />
-    )
+    return <Loading />;
   }
 
   return (
@@ -84,7 +84,6 @@ export default function Home() {
         <Collapse in={collaspeClient.open}>
           {/* <Chat href={`/chat/1`} label={"TEMP USER"} type="Direct" /> */}
           {[...Object.values(users)].map((user: UserSocketType, index: number) => (
-            user.username !== currentUser.username &&
             <Chat
               key={index}
               href={`/chat/${user.chatId}`}
