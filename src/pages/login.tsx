@@ -22,7 +22,11 @@ export default function Login() {
   useEffect(() => {
     if (response.message === SOCKET_MESSAGE.NOT_FOUND) {
       setIsInputError(true);
-    } else if (response.message === SOCKET_MESSAGE.SUCCESS && response.userId) {
+    } else if (
+      response.message === SOCKET_MESSAGE.SUCCESS &&
+      response.userId &&
+      response.username === username
+    ) {
       setCurrentUser({
         username: username,
         userId: response.userId,
