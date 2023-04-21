@@ -75,6 +75,10 @@ export default function NavBarIndex({ ...props }: props) {
       return;
     }
 
+    if (currentUser.username === newName) {
+      closeEditMode()
+      return;
+    }
     updateMe();
   }
 
