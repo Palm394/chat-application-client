@@ -59,11 +59,18 @@ export default function register() {
       setPasswordErrorMsg("password and confirmed cannot be blank");
       return false;
     }
-    if (password.length > 20) {
+    if (password.length < 6 || password.length > 20) {
       setIsInputError([isInputError[0], true]);
-      setPasswordErrorMsg("password is too long");
+      setPasswordErrorMsg("password must be 6-20 char long");
       return false;
     }
+
+    if (password.indexOf(' ') >= 0) {
+      setIsInputError([isInputError[0], true])
+      setPasswordErrorMsg("password can not contain space")
+      return false
+    }
+
     if (password !== confirmPassword) {
       setIsInputError([isInputError[0], true]);
       setPasswordErrorMsg("password not match");
