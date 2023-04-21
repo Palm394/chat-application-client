@@ -4,6 +4,7 @@ export interface ResType {
   username?: string;
   profileImage?: string;
   backgroundImage?: string;
+  chatId?: string;
 }
 
 export type UserSocketType = {

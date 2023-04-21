@@ -56,8 +56,10 @@ export default function GroupChat() {
 
   function getGroupInformation() {
     const groupListener = (group: GroupSocketType) => {
-      setGroupName(group.name);
-      setBackgroundImage(group.backgroundImage);
+      if (chatId === group._id) {
+        setGroupName(group.name);
+        setBackgroundImage(group.backgroundImage);
+      }
     };
 
     socket.on("group", groupListener);
@@ -77,21 +79,23 @@ export default function GroupChat() {
               (a: MessageSocketType, b: MessageSocketType) =>
                 a.createdAt.valueOf() - b.createdAt.valueOf()
             )
-            .map((message: MessageSocketType) => (
-              message.chatId === chatId &&
-              <Message
-                key={message._id}
-                id={message._id}
-                userId={message.userId}
-                text={message.message}
-                isMine={message.isOwner}
-                avatar={message.profileImage}
-                type={"Group"}
-                senderName={message.username}
-                isLiked={message.isLiked}
-                totalLiked={message.like}
-              />
-            ))}
+            .map(
+              (message: MessageSocketType) =>
+                message.chatId === chatId && (
+                  <Message
+                    key={message._id}
+                    id={message._id}
+                    userId={message.userId}
+                    text={message.message}
+                    isMine={message.isOwner}
+                    avatar={message.profileImage}
+                    type={"Group"}
+                    senderName={message.username}
+                    isLiked={message.isLiked}
+                    totalLiked={message.like}
+                  />
+                )
+            )}
         </Box>
       </CenterList>
       <ChatBox chatType="Group" id={chatId} />

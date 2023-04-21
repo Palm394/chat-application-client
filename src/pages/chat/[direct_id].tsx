@@ -60,15 +60,17 @@ export default function Chat() {
       chatId: chatId,
     };
     socket.on("get_direct_by_chat_id_response", (res: ResType) => {
-      console.log("Get Direct Information", res.message);
-      if (res.message === SOCKET_MESSAGE.SUCCESS) {
-        setUser({
-          username: res.username ? res.username : "",
-          userId: res.userId ? res.userId : "",
-          profileImage: res.profileImage ? res.profileImage : "",
-        });
-        setBackgroundImage(res.backgroundImage ? res.backgroundImage : "");
-        socket.off("get_messages_response");
+      if (chatId === res.chatId) {
+        console.log("Get Direct Information", res.message);
+        if (res.message === SOCKET_MESSAGE.SUCCESS) {
+          setUser({
+            username: res.username ? res.username : "",
+            userId: res.userId ? res.userId : "",
+            profileImage: res.profileImage ? res.profileImage : "",
+          });
+          setBackgroundImage(res.backgroundImage ? res.backgroundImage : "");
+          socket.off("get_messages_response");
+        }
       }
     });
     socket.emit("getDirectByChatId", ids);
@@ -85,21 +87,23 @@ export default function Chat() {
               (a: MessageSocketType, b: MessageSocketType) =>
                 a.createdAt.valueOf() - b.createdAt.valueOf()
             )
-            .map((message: MessageSocketType) => (
-              message.chatId === chatId &&
-              <Message
-                key={message._id}
-                id={message._id}
-                userId={message.userId}
-                text={message.message}
-                isMine={message.isOwner}
-                avatar={message.profileImage}
-                type={"Direct"}
-                senderName={message.username}
-                isLiked={message.isLiked}
-                totalLiked={message.like}
-              />
-            ))}
+            .map(
+              (message: MessageSocketType) =>
+                message.chatId === chatId && (
+                  <Message
+                    key={message._id}
+                    id={message._id}
+                    userId={message.userId}
+                    text={message.message}
+                    isMine={message.isOwner}
+                    avatar={message.profileImage}
+                    type={"Direct"}
+                    senderName={message.username}
+                    isLiked={message.isLiked}
+                    totalLiked={message.like}
+                  />
+                )
+            )}
         </Box>
       </CenterList>
 
