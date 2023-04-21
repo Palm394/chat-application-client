@@ -120,13 +120,12 @@ export default function NavBarIndex({ ...props }: props) {
 
   function openEditMode(): void {
     setNewName(userData.username)
-    setPreviewImage("")
     setIsEditMode(true);
   }
 
   function closeEditMode(): void {
     setIsError(false);
-    setImage(currentUser.profileImage)
+    // clearImageProfile();
     setIsEditMode(false);
   }
   return (
