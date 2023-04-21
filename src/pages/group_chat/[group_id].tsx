@@ -1,7 +1,7 @@
 import ChatBox from "@/component/chat/ChatBox";
 import CenterList from "@/component/chat/CenterList";
 import Message from "@/component/chat/message/Message";
-import NavBar from "@/component/navbar/NavBarGroup";
+import NavBar from "@/component/NavBar/NavBarGroup";
 import { useContext, useEffect, useState } from "react";
 import { SocketContext } from "@/context/SocketContext";
 import { useRouter } from "next/router";

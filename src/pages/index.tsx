@@ -1,5 +1,5 @@
 import Chat from "@/component/chat/Chat";
-import NavBar from "@/component/navbar/NavBar";
+import NavBar from "@/component/NavBar/NavBar";
 import CreateGroup from "@/component/group/CreateGroup";
 import CenterList from "@/component/chat/CenterList";
 import { Collapse } from "@mui/material";
