@@ -11,8 +11,8 @@ type props = {
 }
 
 NavBarDirect.defaultProps = {
-  label: "CHAT NAME",
-  avatar: "https://avatars.githubusercontent.com/u/62459518?v=4",
+  label: "LOADING...",
+  avatar: "AVATAR",
   chatId: "SHOULD HAVE CHAT ID"
 }
 
