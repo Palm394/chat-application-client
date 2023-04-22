@@ -47,17 +47,21 @@ export default function NavBarIndex({ ...props }: props) {
   function updateMe() {
     socket.on("update_user_response", (res: ResType) => {
       console.log("Update User Information Status:", res.message);
-      if (res.message === SOCKET_MESSAGE.SUCCESS) {
-        if (currentUser.username === newName) {
-          setUserData({ ...userData, profileImage: image });
-        } else {
-          setUserData({ ...userData, username: newName, profileImage: image });
-        }
-
-        closeEditMode();
-      } else if (res.message === "Username already in use") {
+      //        Change                | Handle/Res
+      //   | username | profileImage  | -----------
+      // 1 |    yes   |     yes       |     OK
+      // 2 |    yes   |     no        |     OK
+      // 3 |    no    |     yes       | view from other account not change  
+      // 4 |    no    |     no        | OK (Handle by client side)
+      if (res.message === SOCKET_MESSAGE.SUCCESS || (res.message === SOCKET_MESSAGE.USERNAME_IN_USE && previewImage)) {
+        setUserData({ ...userData, username: newName, profileImage: image });
+      } else {
         setIsError(true)
+        return
       }
+      closeEditMode()
+      router.reload()
+      return
     });
     socket.emit("updateMe", {
       myUserId: currentUser.userId,
@@ -75,7 +79,7 @@ export default function NavBarIndex({ ...props }: props) {
       return;
     }
 
-    if (currentUser.username === newName) {
+    if (userData.username === newName && !previewImage) {
       closeEditMode()
       return;
     }
@@ -126,6 +130,8 @@ export default function NavBarIndex({ ...props }: props) {
   function closeEditMode(): void {
     setIsError(false);
     // clearImageProfile();
+    setImage(userData.profileImage)
+    setPreviewImage("")
     setIsEditMode(false);
   }
   return (
@@ -137,6 +143,7 @@ export default function NavBarIndex({ ...props }: props) {
         justifyContent: "center",
       }}
     >
+      {image}
       <Toolbar>
         {/* Profile image */}
         {isEditMode ? (
