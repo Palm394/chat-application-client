@@ -48,21 +48,18 @@ export default function NavBarIndex({ ...props }: props) {
       console.log("Update User Information Status:", res.message);
       if (res.message === SOCKET_MESSAGE.SUCCESS) {
         setImage(previewImage);
-        if (userData.username === newName) {
-          setUserData({ ...userData, profileImage: image });
-        } else {
-          setUserData({ ...userData, username: newName, profileImage: image });
-        }
+        setUserData({ ...userData, username: newName, profileImage: previewImage });
 
         closeEditMode();
       } else if (res.message === "Username already in use") {
         setIsError(true);
       }
     });
+
     socket.emit("updateMe", {
       myUserId: userData.userId,
       username: newName,
-      profileImage: image,
+      profileImage: previewImage,
     });
   }
 
@@ -75,10 +72,10 @@ export default function NavBarIndex({ ...props }: props) {
       return;
     }
 
-    if (userData.username === newName) {
-      closeEditMode();
-      return;
-    }
+    // if (userData.username === newName) {
+    //   closeEditMode();
+    //   return;
+    // }
     updateMe();
   }
 
