@@ -33,13 +33,12 @@ type props = {
 export default function NavBarIndex({ ...props }: props) {
   const router = useRouter();
   const socket = useContext(SocketContext);
-  const [currentUser, setCurrentUser] = useLocalStorage<User>("user_data");
+  const [userData, setUserData] = useLocalStorage<User>("user_data");
 
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [newName, setNewName] = useState<string>(currentUser.username);
+  const [newName, setNewName] = useState<string>(userData.username);
   const [isError, setIsError] = useState<boolean>(false);
-  const [userData, setUserData] = useLocalStorage<User>("user_data");
-  const [image, setImage] = useState<string>(currentUser.profileImage);
+  const [image, setImage] = useState<string>(userData.profileImage);
   const [previewImage, setPreviewImage] = useState<string>("");
 
   const menu = useMenu();
@@ -48,7 +47,8 @@ export default function NavBarIndex({ ...props }: props) {
     socket.on("update_user_response", (res: ResType) => {
       console.log("Update User Information Status:", res.message);
       if (res.message === SOCKET_MESSAGE.SUCCESS) {
-        if (currentUser.username === newName) {
+        setImage(previewImage);
+        if (userData.username === newName) {
           setUserData({ ...userData, profileImage: image });
         } else {
           setUserData({ ...userData, username: newName, profileImage: image });
@@ -56,11 +56,11 @@ export default function NavBarIndex({ ...props }: props) {
 
         closeEditMode();
       } else if (res.message === "Username already in use") {
-        setIsError(true)
+        setIsError(true);
       }
     });
     socket.emit("updateMe", {
-      myUserId: currentUser.userId,
+      myUserId: userData.userId,
       username: newName,
       profileImage: image,
     });
@@ -75,8 +75,8 @@ export default function NavBarIndex({ ...props }: props) {
       return;
     }
 
-    if (currentUser.username === newName) {
-      closeEditMode()
+    if (userData.username === newName) {
+      closeEditMode();
       return;
     }
     updateMe();
@@ -88,16 +88,16 @@ export default function NavBarIndex({ ...props }: props) {
     const reader = new FileReader();
     reader.readAsDataURL(tempFile);
     reader.onload = () => {
-      setImage(reader.result as string);
+      setPreviewImage(reader.result as string);
     };
-    setPreviewImage(URL.createObjectURL(tempFile));
+    // setPreviewImage(URL.createObjectURL(tempFile));
     event.target.value = null;
   }
 
   function onClickLogout() {
     console.log("Logout button is clicked");
 
-    setCurrentUser(DEFAULT_CURRENT_USER);
+    setUserData(DEFAULT_CURRENT_USER);
     router.push("/login");
     return;
   }
@@ -119,7 +119,8 @@ export default function NavBarIndex({ ...props }: props) {
   }
 
   function openEditMode(): void {
-    setNewName(userData.username)
+    setNewName(userData.username);
+    setPreviewImage(userData.profileImage);
     setIsEditMode(true);
   }
 
@@ -163,7 +164,13 @@ export default function NavBarIndex({ ...props }: props) {
               onChange={handleChangeNewName}
               value={newName}
               inputProps={{ maxLength: 20 }}
-              helperText={!isError ? `${newName.length}/20` : (newName.length === 0 ? "nickname cannot be blank" : "Username already in use")}
+              helperText={
+                !isError
+                  ? `${newName.length}/20`
+                  : newName.length === 0
+                  ? "nickname cannot be blank"
+                  : "Username already in use"
+              }
               error={isError}
               autoFocus
               size="small"
