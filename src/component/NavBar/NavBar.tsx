@@ -165,8 +165,8 @@ export default function NavBarIndex({ ...props }: props) {
                 !isError
                   ? `${newName.length}/20`
                   : newName.length === 0
-                  ? "nickname cannot be blank"
-                  : "Username already in use"
+                    ? "nickname cannot be blank"
+                    : "Username already in use"
               }
               error={isError}
               autoFocus
@@ -180,7 +180,7 @@ export default function NavBarIndex({ ...props }: props) {
         {/* Action Icon */}
         {isEditMode ? (
           <Box>
-            <IconButton onClick={closeEditMode}>
+            <IconButton onClick={() => { closeEditMode(); setImage(userData.profileImage) }}>
               <CloseIcon />
             </IconButton>
             <IconButton onClick={changeProfile}>
